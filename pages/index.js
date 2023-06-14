@@ -2,37 +2,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import getDataInverter from "@/controller/graphql/device/inverter/get-data/GetDataInverter";
+
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const getServerSideProps = async () => {
-  let todos;
-  try {
-    const response = await fetch("http://localhost:8080/v1/graphql", {
-      method: "POST",
-      headers: {
-        "x-hasura-admin-secret": "",
-      },
-      body: JSON.stringify({
-        query: `query{
-  todos{
-    title
-  }
-}`,
-      }),
-    });
-    const result = await response.json();
-    const data = result.data;
-
-    todos = data.todos;
-
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-  }
-
-  return { props: { todos } };
-};
 
 export default function Home() {
   return (
@@ -149,4 +122,7 @@ export default function Home() {
   );
 }
 
-
+export const getServerSideProps = async () => {
+  await getDataInverter();
+  return { props: { message: "start" } };
+};

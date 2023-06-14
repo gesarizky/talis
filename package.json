@@ -9,10 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.15",
+    "dotenv": "^16.1.4",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.5",
+    "graphql": "^16.6.0",
+    "graphql-ws": "^5.13.1",
+    "mysql2": "^3.3.4",
     "next": "13.4.5",
+    "node-cron": "^3.0.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sequelize": "^6.32.0"
   }
 }
