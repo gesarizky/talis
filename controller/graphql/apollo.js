@@ -4,8 +4,8 @@ import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const httpLink = new HttpLink({
-  uri: process.env.HASURA_PROJECT_HTTP_ENDPOINT,
-  // uri: process.env.HASURA_LOCAL_PROJECT_HTTP_ENDPOINT,
+  // uri: process.env.HASURA_PROJECT_HTTP_ENDPOINT,
+  uri: process.env.HASURA_LOCAL_PROJECT_HTTP_ENDPOINT,
 
   headers: {
     "x-hasura-admin-secret": "",
@@ -14,8 +14,8 @@ const httpLink = new HttpLink({
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: process.env.HASURA_PROJECT_WS_ENDPOINT,
-    // url: process.env.HASURA_LOCAL_PROJECT_WS_ENDPOINT,
+    // url: process.env.HASURA_PROJECT_WS_ENDPOINT,
+    url: process.env.HASURA_LOCAL_PROJECT_WS_ENDPOINT,
     connectionParams: {
       headers: {
         "x-hasura-admin-secret": "",

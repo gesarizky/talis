@@ -2,7 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import getDataInverter from "@/controller/graphql/device/inverter/get-data/GetDataInverter";
+// import getDataInverter from "@/controller/graphql/device/inverter/get-data/GetDataInverter";
+import getDataRms from "@/controller/graphql/device/rms/get-data/GetDataRms";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -123,6 +124,7 @@ export default function Home() {
 }
 
 export const getServerSideProps = async () => {
-  await getDataInverter();
+  // await getDataInverter();
+  await getDataRms();
   return { props: { message: "start" } };
 };

@@ -1,30 +1,32 @@
 import { gql } from "@apollo/client";
 import { apolloClient } from "../../../apollo";
-import postInverterData from "../../../../device/inverter/post/PostInverterData";
+import postRmsData from "@/controller/device/rms/post/PostRmsData";
 
-const getDataInverter = async () => {
-  const GET_INVERTER_SUBCRIPTION = gql`
+const getDataRms = async () => {
+  const GET_RMS_SUBCRIPTION = gql`
     subscription {
-      Inverter(order_by: { createdAt: desc }, limit: 1) {
-        id
-        data
+      RMS(limit: 1, order_by: { createdAt: desc }) {
         UUID_User
+        data
+        id
       }
     }
   `;
   const handleDataUpdate = (data) => {
     // Olah data yang diperbarui di sini
-    data.map((data) => {
-      console.log(data);
-      postInverterData(data);
-    });
+    const datamap =
+     data.map((data) => 
+     {
+      postRmsData(data)
+    }
+    );
   };
   const subscription = apolloClient.subscribe({
-    query: GET_INVERTER_SUBCRIPTION,
+    query: GET_RMS_SUBCRIPTION,
   });
   subscription.subscribe({
     next: (result) => {
-      const data = result.data.Inverter;
+      const data = result.data.RMS;
       handleDataUpdate(data);
     },
     error: (error) => {
@@ -32,4 +34,4 @@ const getDataInverter = async () => {
     },
   });
 };
-export default getDataInverter;
+export default getDataRms;
