@@ -1,0 +1,23 @@
+{
+  "system_dc_side_voltage_mv": 452,
+  "system_dc_side_total_current_ma": 0,
+  "power_module_dc_side_voltage_mv": 434,
+  "power_module_dc_side_current_ma": 0,
+  "power_module_ambient_temperature_mc": 27042,
+  "power_module_status": [128, 69, 2],
+  "inverter_status": 0,
+  "dc_max_output_voltage_mv": 1000000,
+  "dc_min_output_voltage_mv": 50000,
+  "dc_max_output_current_ma": 73326,
+  "dc_rated_output_power_mw": 5222784,
+  "ac_a_phase_voltage_mv": 236522,
+  "ac_b_phase_voltage_mv": 233438,
+  "ac_c_phase_voltage_mv": 235782,
+  "ac_a_phase_current_ma": 0,
+  "ac_b_phase_current_ma": 0,
+  "ac_c_phase_current_ma": 0,
+  "ac_frequency_mhz": 49937,
+  "total_active_power_mw": 0,
+  "pm_dc_high_voltage_side_voltage_mv": 240593,
+  "pm_dc_high_voltage_side_current_ma": 0
+}

@@ -5,28 +5,44 @@ import StoreDataHistory from "../storedata/history/AddDataHistory";
 
 const InverterAnalysis = async (datainverter, dataUser) => {
   try {
-    const datainvertersn = datainverter.inverter_sn;
-    //perhitungan power
-    const datapower = await ResultPower(datainverter);
-    //perhitungan energy
-    const dataenergy = await ResultEnergy(datapower);
-    //inverter status
-    const inverterstatus = await ResultInverterStatus(datainverter);
-    const { newdatainverterstatus, newdatastatusinverter, newdatastatuserror } =
-      inverterstatus;
+    if (datainverter.inverter_status) {
+      const datainvertersn = datainverter.inverter_sn;
+      //perhitungan power
+      const datapower = await ResultPower(datainverter);
+      //perhitungan energy
+      const dataenergy = await ResultEnergy(datapower);
+      //inverter status
+      const inverterstatus = await ResultInverterStatus(datainverter);
+      const {
+        newdatainverterstatus,
+        newdatastatusinverter,
+        newdatastatuserror,
+      } = inverterstatus;
 
-    const result = {
-      UUID_User: dataUser,
-      inverter_sn: datainvertersn,
-      mode: newdatainverterstatus,
-      power: datapower,
-      energy: dataenergy,
-      status: newdatastatusinverter,
-      code: newdatastatuserror,
-    };
+      const result = {
+        UUID_User: dataUser,
+        inverter_sn: datainvertersn,
+        mode: newdatainverterstatus,
+        power: datapower,
+        energy: dataenergy,
+        status: newdatastatusinverter,
+        code: newdatastatuserror,
+      };
+      await StoreDataHistory(result);
+
+      return result;
+    } else {
+      const result = {
+        UUID_User: dataUser,
+        inverter_sn: null,
+        mode: null,
+        power: null,
+        energy: null,
+        status: null,
+        code: null,
+      };
     await StoreDataHistory(result);
-    
-    return result;
+    }
   } catch (error) {
     console.error(error);
     throw {

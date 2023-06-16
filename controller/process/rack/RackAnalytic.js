@@ -20,7 +20,8 @@ const getColor = (value) => {
   return resultColor;
 };
 
-const RackAnalytic = async (dataRacks, dataUser) => {
+const RackAnalytic = async (dataUser, dataRacks) => {
+  if(dataRacks){
   const UUID_User = dataUser;
   const rack_sn = dataRacks.rack_sn;
   const frame_data = dataRacks.data.battery;
@@ -55,9 +56,16 @@ const RackAnalytic = async (dataRacks, dataUser) => {
     },
   };
 
-
   await HistoryDashboard.upsert(resultRack);
-
+}else{
+  const UUID_User = dataUser;
+  const resultRack = {
+    rack_sn: null,
+    UUID_User: UUID_User,
+    data: null,
+  };
+  await HistoryDashboard.upsert(resultRack);
+}
 };
 
 export default RackAnalytic;

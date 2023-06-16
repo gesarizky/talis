@@ -14,12 +14,10 @@ const getDataRms = async () => {
   `;
   const handleDataUpdate = (data) => {
     // Olah data yang diperbarui di sini
-    const datamap =
-     data.map((data) => 
-     {
-      postRmsData(data)
-    }
-    );
+    const datamap = data.map((data) => {
+      // console.log(data);
+      postRmsData(data);
+    });
   };
   const subscription = apolloClient.subscribe({
     query: GET_RMS_SUBCRIPTION,

@@ -1,9 +1,9 @@
 import CellAnalytic from "./CellAnalytic";
 
-const ParseCMS = async (dataCms, dataParams, dataUser) => {
+const ParseCMS = async (dataCms, dataUser) => {
   try {
 
-    await CellAnalytic(dataCms, dataParams, dataUser);
+    await CellAnalytic(dataCms, dataUser);
 
     
   } catch (error) {
