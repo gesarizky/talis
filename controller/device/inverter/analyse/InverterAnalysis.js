@@ -5,7 +5,8 @@ import StoreDataHistory from "../storedata/history/AddDataHistory";
 
 const InverterAnalysis = async (datainverter, dataUser) => {
   try {
-    if (datainverter.inverter_status) {
+    console.log(datainverter.power_module_status);
+    if (datainverter.power_module_status) {
       const datainvertersn = datainverter.inverter_sn;
       //perhitungan power
       const datapower = await ResultPower(datainverter);
@@ -32,6 +33,7 @@ const InverterAnalysis = async (datainverter, dataUser) => {
 
       return result;
     } else {
+      console.log("data inv kosong");
       const result = {
         UUID_User: dataUser,
         inverter_sn: null,
@@ -41,7 +43,7 @@ const InverterAnalysis = async (datainverter, dataUser) => {
         status: null,
         code: null,
       };
-    await StoreDataHistory(result);
+      await StoreDataHistory(result);
     }
   } catch (error) {
     console.error(error);
