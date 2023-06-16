@@ -19,7 +19,7 @@ const StoreDataHistory = async (datainverter) => {
       UUID_User: datauuid,
     });
     if (created) {
-        console.log("Data created");
+        // console.log("Data created");
       //   console.log(dataRealtimeDbInverter.dataValues);
 
       return {
@@ -28,7 +28,7 @@ const StoreDataHistory = async (datainverter) => {
         data: dataRealtimeDbInverter.dataValues,
       };
     } else {
-        console.log("Data updated");
+        // console.log("Data updated");
       //   console.log(dataRealtimeDbInverter.dataValues);
 
       return {

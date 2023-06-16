@@ -25,8 +25,7 @@ const InverterAnalysis = async (datainverter, dataUser) => {
       code: newdatastatuserror,
     };
     await StoreDataHistory(result);
-    // await StoreDataRealtimeInverter(result);
-    console.log(result);
+    
     return result;
   } catch (error) {
     console.error(error);

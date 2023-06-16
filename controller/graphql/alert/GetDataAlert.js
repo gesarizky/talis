@@ -1,14 +1,14 @@
 import { gql } from "@apollo/client";
-import { apolloClient } from "../../../apollo";
-import postInverterData from "../../../../device/inverter/post/PostInverterData";
+import { apolloClient } from "../apollo"; 
+import AddDataAlert from "@/controller/alert/storedata/AadDataalert";
 
-const getDataInverter = async () => {
-  const GET_INVERTER_SUBCRIPTION = gql`
+const getDataAlert = async () => {
+  const GET_ALERT_SUBCRIPTION = gql`
     subscription {
-      Inverter(order_by: { createdAt: desc }, limit: 1) {
-        id
-        data
+      Alert(limit: 1, order_by: { createdAt: desc }) {
         UUID_User
+        data
+        id
       }
     }
   `;
@@ -16,15 +16,15 @@ const getDataInverter = async () => {
     // Olah data yang diperbarui di sini
     data.map((data) => {
       // console.log(data);
-      postInverterData(data);
+      AddDataAlert(data);
     });
   };
   const subscription = apolloClient.subscribe({
-    query: GET_INVERTER_SUBCRIPTION,
+    query: GET_ALERT_SUBCRIPTION,
   });
   subscription.subscribe({
     next: (result) => {
-      const data = result.data.Inverter;
+      const data = result.data.Alert;
       handleDataUpdate(data);
     },
     error: (error) => {
@@ -32,4 +32,4 @@ const getDataInverter = async () => {
     },
   });
 };
-export default getDataInverter;
+export default getDataAlert;

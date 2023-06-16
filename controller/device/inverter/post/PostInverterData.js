@@ -4,6 +4,7 @@ const postInverterData = async (data) => {
     const dataolah = data.data;
     const dataUser = data.UUID_User;
     if (dataolah.code === 200) {
+      // console.log("masuk postinver");
       await InverterAnalysis(dataolah, dataUser);
     }
   } catch (error) {
