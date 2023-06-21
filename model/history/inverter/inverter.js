@@ -6,16 +6,8 @@ const { DataTypes } = Sequelize;
 const HistoryInverter = DBHISTORY.define(
   "history_inverter",
   {
-    inverter_sn: DataTypes.STRING,
-    mode: DataTypes.STRING,
-    power: DataTypes.FLOAT,
-    energy: DataTypes.FLOAT,
-    status: DataTypes.STRING,
-    code: DataTypes.JSON,
-    UUID_User: {
-      unique: "UUID_User",
-      type: DataTypes.STRING,
-    },
+    UUID_User: DataTypes.STRING,
+    data: DataTypes.JSON,
   },
   {
     paranoid: true,
@@ -25,6 +17,6 @@ const HistoryInverter = DBHISTORY.define(
 export default HistoryInverter;
 
 (async () => {
-  // await DBHISTORY.sync({ alter: true });
-  await DBHISTORY.sync();
+  await DBHISTORY.sync({ alter: true });
+  // await DBHISTORY.sync();
 })();

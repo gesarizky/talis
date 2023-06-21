@@ -16,13 +16,16 @@ const FrameStore = async (dataUser, rms_sn, listFrameAnalytic) => {
       rack_sn,
       UUID_User,
     };
+    // return result;
+    // console.log(result);
     await HistoryRack.upsert(result);
-    RackAnalytic(dataUser,result);
-  }else{
+    RackAnalytic(dataUser, result);
+    // return response;
+  } else {
     const UUID_User = dataUser;
     const result = {
       data: null,
-      rack_sn:null,
+      rack_sn: null,
       UUID_User,
     };
     await HistoryRack.upsert(result);

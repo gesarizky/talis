@@ -9,10 +9,7 @@ import GetParam from "@/controller/param/GetParam";
 
 const CellAnalytic = async (RMSData, dataUser) => {
   try {
-    
     if (RMSData.cms_data[0]) {
-      
-
       const device_sn = {}; // default config
       const dataParams = await GetParam(device_sn);
 
@@ -54,21 +51,23 @@ const CellAnalytic = async (RMSData, dataUser) => {
           const health = FrameAnalytic(result, frame_name);
           const resultVoltage = { voltage: vpack };
           resultFrame.push(health);
+          // const dataframe = FrameStore(dataUser, rms_sn, resultFrame); // store frame data
+          // console.log(dataframe);
           Object.assign(result["data"], health);
           Object.assign(result["data"], resultVoltage);
           Object.assign(result["data"], resultTemp);
+          Object.assign(result["data"], { data_rack: dataframe });
           const realtimeCellsData = {
+            rack_sn:rms_sn,
             frame_name: frame_name,
             UUID_User,
             ...result,
           };
           // console.log(realtimeCellsData);
           await StoreHistoryCms(realtimeCellsData);
-          // await StoreRealtimeCms(realtimeCellsData);
-          // console.log(realtimeCellsData);
         }
       });
-      FrameStore(dataUser,rms_sn, resultFrame); // store frame data
+       FrameStore(dataUser, rms_sn, resultFrame); // store frame data
     } else {
       const UUID_User = dataUser;
       const realtimeCellsData = {

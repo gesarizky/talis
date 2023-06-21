@@ -14,8 +14,8 @@ const httpLink = new HttpLink({
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    // url: process.env.HASURA_PROJECT_WS_ENDPOINT,
-    url: process.env.HASURA_LOCAL_PROJECT_WS_ENDPOINT,
+    url: process.env.HASURA_PROJECT_WS_ENDPOINT,
+    // url: process.env.HASURA_LOCAL_PROJECT_WS_ENDPOINT,
     connectionParams: {
       headers: {
         "x-hasura-admin-secret": "",

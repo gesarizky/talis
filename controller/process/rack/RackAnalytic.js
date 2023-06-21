@@ -1,4 +1,3 @@
-
 import HistoryDashboard from "@/model/history/dashboard/HistoryDashboard";
 
 const Color = {
@@ -21,51 +20,52 @@ const getColor = (value) => {
 };
 
 const RackAnalytic = async (dataUser, dataRacks) => {
-  if(dataRacks){
-  const UUID_User = dataUser;
-  const rack_sn = dataRacks.rack_sn;
-  const frame_data = dataRacks.data.battery;
+  if (dataRacks) {
+    const UUID_User = dataUser;
+    const rack_sn = dataRacks.rack_sn;
+    const frame_data = dataRacks.data.battery;
 
-  let minHealth = Infinity;
-  let minContent = Infinity;
+    let minHealth = Infinity;
+    let minContent = Infinity;
 
-  frame_data.forEach((item) => {
-    if (parseFloat(item.health.value) < minHealth) {
-      minHealth = parseFloat(item.health.value);
-    }
-    if (parseFloat(item.content.value) < minContent) {
-      minContent = parseFloat(item.content.value);
-    }
-  });
+    frame_data.forEach((item) => {
+      if (parseFloat(item.health.value) < minHealth) {
+        minHealth = parseFloat(item.health.value);
+      }
+      if (parseFloat(item.content.value) < minContent) {
+        minContent = parseFloat(item.content.value);
+      }
+    });
 
-  const resultRack = {
-    rack_sn: rack_sn,
-    UUID_User: UUID_User,
-
-    data: {
-      health: {
-        color: getColor(minHealth),
-        value: minHealth,
-      },
-      content: {
-        color: getColor(minContent),
-        value: minContent,
-      },
+    const resultRack = {
       rack_sn: rack_sn,
       UUID_User: UUID_User,
-    },
-  };
 
-  await HistoryDashboard.upsert(resultRack);
-}else{
-  const UUID_User = dataUser;
-  const resultRack = {
-    rack_sn: null,
-    UUID_User: UUID_User,
-    data: null,
-  };
-  await HistoryDashboard.upsert(resultRack);
-}
+      data: {
+        health: {
+          color: getColor(minHealth),
+          value: minHealth,
+        },
+        content: {
+          color: getColor(minContent),
+          value: minContent,
+        },
+        rack_sn: rack_sn,
+        UUID_User: UUID_User,
+      },
+    };
+    return resultRack;
+    // console.log(resultRack);
+    // await HistoryDashboard.upsert(resultRack);
+  } else {
+    const UUID_User = dataUser;
+    const resultRack = {
+      rack_sn: null,
+      UUID_User: UUID_User,
+      data: null,
+    };
+    // await HistoryDashboard.upsert(resultRack);
+  }
 };
 
 export default RackAnalytic;

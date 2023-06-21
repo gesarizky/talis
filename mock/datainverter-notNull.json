@@ -1,0 +1,10 @@
+{
+  "rack_sn":"RALIS-210",
+  "inverter_data":[{
+    "code": { "error": [], "warning": [] },
+    "mode": "discharge",
+    "power": 78,
+    "status": "normal",
+    "inverter_sn": "inv008"
+  }]
+}
