@@ -7,11 +7,13 @@ const getStatus = (tempValue, index) => {
     color = "green";
   }
 
-  return {
-    temperature: index + 1,
-    value: Math.round(tempValue / 1000),
-    color: color,
-  };
+  // return {
+  //   temperature: index + 1,
+  //   value: Math.round(tempValue / 1000),
+  //   color: color,
+  // };
+  const value = Math.round(tempValue / 1000);
+  return value;
 };
 
 const TempAnalytic = (arrayOfTemp) => {
@@ -42,22 +44,33 @@ const TempAnalytic = (arrayOfTemp) => {
   //     arrayTemp
   //   );
 
-  const resultTemp = {
-    temperatures: {
-      cells: [
-        resultTempCell[0],
-        resultTempCell[1],
-        resultTempCell[2],
-        resultTempCell[3],
-        resultTempCell[4],
-        resultTempCell[5],
-      ],
-      pcbs: [resultTempPcb[0], resultTempPcb[1], resultTempPcb[2]],
-    },
-  };
+  // const resultTemp = {
+  //   temperatures: {
+  //     cells: [
+  //       resultTempCell[0],
+  //       resultTempCell[1],
+  //       resultTempCell[2],
+  //       resultTempCell[3],
+  //       resultTempCell[4],
+  //       resultTempCell[5],
+  //     ],
+  //     pcbs: [resultTempPcb[0], resultTempPcb[1], resultTempPcb[2]],
+  //   },
+  // };
+  const temperatures = [
+    resultTempCell[0],
+    resultTempCell[1],
+    resultTempCell[2],
+    resultTempCell[3],
+    resultTempCell[4],
+    resultTempCell[5],
+    resultTempPcb[0],
+    resultTempPcb[1],
+    resultTempPcb[2],
+  ];
   //   console.log("🚀 ~ file: TempAnalytic.js:44 ~ TempAnalytic ~ resultTemp:", resultTemp)
 
-  return resultTemp;
+  return temperatures;
 };
 
 export default TempAnalytic;

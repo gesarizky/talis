@@ -26,43 +26,41 @@ const getColor = (value) => {
     return resultColor;
 }
 
-const FrameAnalytic = (resultCell, frame_name) => {
+const FrameAnalytic = (resultCell, frame_name, rms_sn) => {
+  const result = resultCell.data.result;
 
-    const result = resultCell.data.result;
+  let minHealth = Infinity;
+  let minContent = Infinity;
 
-    let minHealth = Infinity;
-    let minContent = Infinity;
-
-    result.forEach((item) => {
-        if (parseFloat(item.health.value) < minHealth) {
-            minHealth = parseFloat(item.health.value);
-        }
-        if (parseFloat(item.content.value) < minContent) {
-            minContent = parseFloat(item.content.value);
-        }
-    });
-
-
-
-    const resultFrame = {
-        health: {
-            color: getColor(minHealth),
-            value: minHealth,
-        },
-        content: {
-            color: getColor(minContent),
-            value: minContent,
-        },
-        frame_name: frame_name
+  result.forEach((item) => {
+    if (parseFloat(item.health.value) < minHealth) {
+      minHealth = parseFloat(item.health.value);
     }
+    if (parseFloat(item.content.value) < minContent) {
+      minContent = parseFloat(item.content.value);
+    }
+  });
 
-    return resultFrame;
+  const resultFrame = {
+    health: {
+      // color: getColor(minHealth),
+      // value: minHealth,
+    },
+    content: {
+      // color: getColor(minContent),
+      // value: minContent,
+    },
+    voltage: {
+    },
+    temperatures: {
+    },
+    frame_name: frame_name,
+    rack_sn: rms_sn,
+  };
 
-    console.log(`${frame_name} :  Minimum health value:   ${minHealth}`);
-    console.log(`${frame_name} :  Minimum content value:   ${minContent}`);
-    // console.log('frame' , frame_name);
+  return resultFrame;
 
-}
+};
 
 
 export default FrameAnalytic;

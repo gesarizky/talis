@@ -1,7 +1,7 @@
-import HistoryCells from "@/model/history/cells/HistoryCells";
+import HistoryRack from "@/model/history/rack/HistoryRack";
 
-const StoreHistoryCms = async (resultCmsHistory) => {
-  const resultRealtimeCells = await HistoryCells.upsert(resultCmsHistory);
+const StoreHistoryCms = async (result) => {
+   await HistoryRack.create(result);
 
 };
 

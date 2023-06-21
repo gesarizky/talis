@@ -1,30 +1,6 @@
 import Batas from "@/model/access/cms/LimitCell";
 import ModelParam from "@/model/access/param/ModelParam";
-// const CellContent = (frame_name, dataVcell) => {
 
-//     const batasJSON = {
-//         badBawah: 3200,
-//         warningBawah: 3300,
-//         good: 3400,
-//         warningAtas: 3500,
-//         badAtas: 3600
-//     };
-
-
-//     const batas = new Batas(batasJSON);
-//     const hasil = dataVcell.map((n, i) => {
-//         const status = batas.getStatus(n);
-//         return {
-//             cell: i + 1,
-//             value: n,
-//             color: status
-//         };
-//     });
-
-//     const result = {data: { frame_name: frame_name, result: hasil } };
-//     return result;
-
-// }
 
 const Color = {
     BAD: 'red',
@@ -43,10 +19,7 @@ const getColor = (value) => {
 
         resultColor = Color.WARNING;
     }
-    // else {
-
-    //     resultColor = Color.BAD;
-    // }
+    
 
     return resultColor;
 }
@@ -90,7 +63,6 @@ const CellContent = (frame_name, dataVcell, modelParam) => {
 
 
         const dataContent = parseFloat(((extractValue /rangeContent) * 100).toFixed(1));
-        // const dataContent = ((value / configModelParam.maximumCellVoltage) * 100).toFixed(1);
         const rawHealth = ((configModelParam.capacityNew / configModelParam.capacityNow) - ((maxVcell - value) / configModelParam.maximumDifferentCell));
         const dataHealth = rawHealth > 0 ? parseFloat((rawHealth * 100).toFixed(1)) : 0; // if raw health > 0, x with percent, if not, set 0
 
@@ -118,29 +90,7 @@ const CellContent = (frame_name, dataVcell, modelParam) => {
             },
             ...health,
             ...content
-            // health: {
-            //     color: batas.getStatus(value),
-            //     value: (((configModelParam.capacityNew / configModelParam.capacityNow) - ((maxVcell - value) / configModelParam.maximumDifferentCell)) * 100).toFixed(1)
-
-            // },
-            // content: {
-            //     color: batas.getStatus(value),
-            //     value: ((value / configModelParam.maximumCellVoltage) * 100).toFixed(1)
-
-            // },
-            // cell: {
-            //     index: i + 1,
-            //     value: value,
-            //     color: batas.getStatus(value),
-            //     content: {
-            //         value: ((value / configModelParam.maximumCellVoltage) * 100).toFixed(1),
-            //         color: batas.getStatus(value)
-            //     },
-            //     health: {
-            //         value: (((configModelParam.capacityNew / configModelParam.capacityNow) - ((maxVcell - value) / configModelParam.maximumDifferentCell)) * 100).toFixed(1),
-            //         color: batas.getStatus(value)
-            //     }
-            // }
+           
         };
     });
 

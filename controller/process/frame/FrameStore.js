@@ -1,5 +1,4 @@
-import HistoryRack from "@/model/history/rack/HistoryRack";
-import RackAnalytic from "../rack/RackAnalytic";
+import StoreHistoryCms from "@/controller/device/rms/storedata/history/StoreHistoryCMS";
 
 const FrameStore = async (dataUser, rms_sn, listFrameAnalytic) => {
   if (listFrameAnalytic) {
@@ -12,24 +11,22 @@ const FrameStore = async (dataUser, rms_sn, listFrameAnalytic) => {
     }
 
     const result = {
-      data: { battery: listFrameAnalytic },
-      rack_sn,
+      data: { cms_data: listFrameAnalytic },
+      // rack_sn,
       UUID_User,
     };
-    // return result;
-    // console.log(result);
-    await HistoryRack.upsert(result);
-    RackAnalytic(dataUser, result);
-    // return response;
+
+    // await HistoryRack.create(result);
+    await StoreHistoryCms(result);
   } else {
     const UUID_User = dataUser;
     const result = {
-      data: null,
-      rack_sn: null,
+      data: { cms_data: [] },
+      // rack_sn,
       UUID_User,
     };
-    await HistoryRack.upsert(result);
-    RackAnalytic(dataUser);
+    // await HistoryRack.create(result);
+    await StoreHistoryCms(result);
   }
 };
 

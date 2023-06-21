@@ -3,12 +3,8 @@ import DBHISTORY from "@/config/history/DBHistory";
 
 const { DataTypes } = Sequelize;
 
-const HistoryRack = DBHISTORY.define("history_rack", {
-  UUID_User: {
-    unique: "UUID_User",
-    type: DataTypes.STRING,
-  },
-  rack_sn: DataTypes.STRING,
+const HistoryRack = DBHISTORY.define("history_cell", {
+  UUID_User: DataTypes.STRING,
   data: DataTypes.JSON,
 });
 

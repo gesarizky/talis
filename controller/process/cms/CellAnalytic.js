@@ -1,9 +1,11 @@
 import CMSModel from "@/model/access/cms/CMSModel";
 import CellContent from "./CellContent";
+import CellsContent from "./CellsContent";
+import CellsHealth from "./CellsHealth";
+import CellsVoltage from "./CellsVoltage";
 import ModelParam from "@/model/access/param/ModelParam";
 import FrameAnalytic from "../frame/FrameAnalytic";
 import TempAnalytic from "./TempAnalytic";
-import StoreHistoryCms from "@/controller/device/rms/storedata/history/StoreHistoryCMS";
 import FrameStore from "../frame/FrameStore";
 import GetParam from "@/controller/param/GetParam";
 
@@ -13,7 +15,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
       const device_sn = {}; // default config
       const dataParams = await GetParam(device_sn);
 
-      const UUID_User = dataUser;
+      // const UUID_User = dataUser;
       const modelParams = new ModelParam(dataParams);
       const configCell = modelParams.cellNotUsed;
       const indexUnusedZeroBased = configCell.map((i) => i - 1);
@@ -29,12 +31,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
         if (myModelInstance.frame_name != "FRAME-32-NA") {
           const vcell = myModelInstance.vcell;
           const frame_name = myModelInstance.frame_name;
-          const vpack = Math.round(
-            (myModelInstance.pack[0] +
-              myModelInstance.pack[1] +
-              myModelInstance.pack[2]) /
-              1000
-          );
+          
           const temps = myModelInstance.temp;
 
           const resultTemp = TempAnalytic(temps);
@@ -42,41 +39,27 @@ const CellAnalytic = async (RMSData, dataUser) => {
           const filteredVcell = vcell.filter(
             (_, index) => !indexUnusedZeroBased.includes(index)
           );
-          const minVcell = Math.min(...filteredVcell);
-          const maxVcell = Math.max(...filteredVcell);
-          const selisihVcell = filteredVcell
-            .filter((value) => value !== minVcell)
-            .map((value) => value - minVcell);
           let result = CellContent(frame_name, filteredVcell, dataParams);
-          const health = FrameAnalytic(result, frame_name);
-          const resultVoltage = { voltage: vpack };
+          const resultcontens = CellsContent(filteredVcell, dataParams);
+          const resulthealth = CellsHealth(filteredVcell, dataParams);
+          const resultvoltage = CellsVoltage(filteredVcell);
+
+          const health = FrameAnalytic(result, frame_name, rms_sn);
           resultFrame.push(health);
-          // const dataframe = FrameStore(dataUser, rms_sn, resultFrame); // store frame data
-          // console.log(dataframe);
-          Object.assign(result["data"], health);
-          Object.assign(result["data"], resultVoltage);
-          Object.assign(result["data"], resultTemp);
-          Object.assign(result["data"], { data_rack: dataframe });
-          const realtimeCellsData = {
-            rack_sn:rms_sn,
-            frame_name: frame_name,
-            UUID_User,
-            ...result,
-          };
-          // console.log(realtimeCellsData);
-          await StoreHistoryCms(realtimeCellsData);
+          Object.assign(health["health"], resulthealth);
+          // Object.assign(health["content"], resultcontens);
+          // Object.assign(health["voltage"], resultvoltage);
+          // Object.assign(health["temperatures"], resultTemp);
+          
         }
       });
-       FrameStore(dataUser, rms_sn, resultFrame); // store frame data
+      // console.log(resultFrame);
+      FrameStore(dataUser, rms_sn, resultFrame); // store frame data
     } else {
+      const rms_sn = RMSData.rack_sn;
       const UUID_User = dataUser;
-      const realtimeCellsData = {
-        data: null,
-        frame_name: null,
-        UUID_User,
-      };
-      await StoreHistoryCms(realtimeCellsData);
-      FrameStore(dataUser); // store frame data
+      const resultFrame = null;
+      FrameStore(dataUser, rms_sn, resultFrame); // store frame data
     }
   } catch (error) {
     console.log(error);
