@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
-import { apolloClient } from "../apollo"; 
-import AddDataAlert from "@/controller/alert/storedata/AadDataalert";
+import { apolloClient } from "../apollo";
+// import AddDataAlert from "@/controller/alert/storedata/AadDataalert";
+import postAlertData from "@/controller/alert/post/PostDataAlert";
 
 const getDataAlert = async () => {
   const GET_ALERT_SUBCRIPTION = gql`
@@ -8,7 +9,6 @@ const getDataAlert = async () => {
       Alert(limit: 1, order_by: { createdAt: desc }) {
         UUID_User
         data
-        id
       }
     }
   `;
@@ -16,7 +16,8 @@ const getDataAlert = async () => {
     // Olah data yang diperbarui di sini
     data.map((data) => {
       // console.log(data);
-      AddDataAlert(data);
+      // AddDataAlert(data);
+      postAlertData(data);
     });
   };
   const subscription = apolloClient.subscribe({

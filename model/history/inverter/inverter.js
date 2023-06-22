@@ -1,9 +1,11 @@
 import { Sequelize } from "sequelize";
 import DBHISTORY from "@/config/history/DBHistory";
+import DB from "@/config/database";
+
 
 const { DataTypes } = Sequelize;
 
-const HistoryInverter = DBHISTORY.define(
+const HistoryInverter = DB.define(
   "history_inverter",
   {
     UUID_User: DataTypes.STRING,
@@ -17,6 +19,6 @@ const HistoryInverter = DBHISTORY.define(
 export default HistoryInverter;
 
 (async () => {
-  await DBHISTORY.sync({ alter: true });
-  // await DBHISTORY.sync();
+  // await DB.sync({ alter: true });
+  await DB.sync();
 })();

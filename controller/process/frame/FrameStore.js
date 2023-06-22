@@ -12,20 +12,16 @@ const FrameStore = async (dataUser, rms_sn, listFrameAnalytic) => {
 
     const result = {
       data: { cms_data: listFrameAnalytic },
-      // rack_sn,
       UUID_User,
     };
 
-    // await HistoryRack.create(result);
     await StoreHistoryCms(result);
   } else {
     const UUID_User = dataUser;
     const result = {
       data: { cms_data: [] },
-      // rack_sn,
       UUID_User,
     };
-    // await HistoryRack.create(result);
     await StoreHistoryCms(result);
   }
 };

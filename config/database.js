@@ -10,7 +10,7 @@ const DATABASE_PORT = process.env.DATABASE_PORT;
 const DATABASE_TYPE = process.env.DATABASE_TYPE;
 const DATABASE_LOGGING = process.env.DATABSE_LOGGING;
 
-const db = new Sequelize(DATABASE, DATABASE_USERNAME, DATABASE_PASSWORD, {
+const DB = new Sequelize(DATABASE, DATABASE_USERNAME, DATABASE_PASSWORD, {
   host: DATABASE_HOST,
   port: DATABASE_PORT,
   dialect: DATABASE_TYPE,
@@ -18,4 +18,4 @@ const db = new Sequelize(DATABASE, DATABASE_USERNAME, DATABASE_PASSWORD, {
   timezone: "+07:00",
 });
 
-export default db;
+export default DB;

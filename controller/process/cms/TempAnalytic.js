@@ -7,11 +7,7 @@ const getStatus = (tempValue, index) => {
     color = "green";
   }
 
-  // return {
-  //   temperature: index + 1,
-  //   value: Math.round(tempValue / 1000),
-  //   color: color,
-  // };
+  
   const value = Math.round(tempValue / 1000);
   return value;
 };
@@ -28,9 +24,7 @@ const TempAnalytic = (arrayOfTemp) => {
   ];
   let resultTempPcb = [];
   let resultTempCell = [];
-  //   const statusArray = arrayOfTemp.map((temp) => {
-  //     arrayTemp.push(getStatus(temp));
-  //   });
+  
 
   for (let index = 0; index < rawPcb.length; index++) {
     resultTempPcb.push(getStatus(rawPcb[index], index));
@@ -39,24 +33,6 @@ const TempAnalytic = (arrayOfTemp) => {
     resultTempCell.push(getStatus(rawCell[index], index));
   }
 
-  //   console.log(
-  //     "🚀 ~ file: TempAnalytic.js:20 ~ statusArray ~ arrayTemp:",
-  //     arrayTemp
-  //   );
-
-  // const resultTemp = {
-  //   temperatures: {
-  //     cells: [
-  //       resultTempCell[0],
-  //       resultTempCell[1],
-  //       resultTempCell[2],
-  //       resultTempCell[3],
-  //       resultTempCell[4],
-  //       resultTempCell[5],
-  //     ],
-  //     pcbs: [resultTempPcb[0], resultTempPcb[1], resultTempPcb[2]],
-  //   },
-  // };
   const temperatures = [
     resultTempCell[0],
     resultTempCell[1],
@@ -68,7 +44,6 @@ const TempAnalytic = (arrayOfTemp) => {
     resultTempPcb[1],
     resultTempPcb[2],
   ];
-  //   console.log("🚀 ~ file: TempAnalytic.js:44 ~ TempAnalytic ~ resultTemp:", resultTemp)
 
   return temperatures;
 };
