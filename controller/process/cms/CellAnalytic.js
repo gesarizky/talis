@@ -19,6 +19,10 @@ const CellAnalytic = async (RMSData, dataUser) => {
       const indexUnusedZeroBased = configCell.map((i) => i - 1);
 
       const resultFrame = [];
+      const resultcontent = [];
+      const resulthealth = [];
+      const resultvoltage = [];
+      const resulttemperature = [];
 
       const rms_sn = RMSData.rack_sn;
 
@@ -38,22 +42,53 @@ const CellAnalytic = async (RMSData, dataUser) => {
             (_, index) => !indexUnusedZeroBased.includes(index)
           );
           const resultcontens = CellsContent(filteredVcell, dataParams);
-          const resulthealth = CellsHealth(filteredVcell, dataParams);
-          const resultvoltage = CellsVoltage(filteredVcell);
-          
+          const resulthealths = CellsHealth(filteredVcell, dataParams);
+          const resultvoltages = CellsVoltage(filteredVcell);
+
+          // resultFrame.push({
+          //   rack_sn: rms_sn,
+          //   frame_name: frame_name,
+          //   health: resulthealths,
+          //   content: resultcontens,
+          //   voltage: resultvoltages,
+          //   temperatures: resultTemp,
+          // });
           resultFrame.push({
             rack_sn: rms_sn,
             frame_name: frame_name,
-            health: resulthealth,
+          });
+          resultcontent.push({
+            rack_sn: rms_sn,
+            frame_name: frame_name,
             content: resultcontens,
-            voltage: resultvoltage,
+          });
+          resulthealth.push({
+            rack_sn: rms_sn,
+            frame_name: frame_name,
+            health: resulthealths,
+          });
+          resultvoltage.push({
+            rack_sn: rms_sn,
+            frame_name: frame_name,
+            voltage: resultvoltages,
+          });
+          resulttemperature.push({
+            rack_sn: rms_sn,
+            frame_name: frame_name,
             temperatures: resultTemp,
           });
-
         }
       });
-      // console.log(resultFrame);
-      FrameStore(dataUser, rms_sn, resultFrame); // store frame data
+      // FrameStore(dataUser, rms_sn, resultFrame); // store frame data
+      FrameStore(
+        dataUser,
+        rms_sn,
+        resultFrame,
+        resultcontent,
+        resulthealth,
+        resultvoltage,
+        resulttemperature
+      ); // store frame data
     } else {
       const rms_sn = RMSData.rack_sn;
       const resultFrame = null;

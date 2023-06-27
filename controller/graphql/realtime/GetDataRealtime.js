@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { apolloClient } from "../apollo"; 
+import { apolloClient } from "../apollo";
 // import AddDataRealtime from "@/controller/realtime/storedata/AadDataRealtime";
 import postRealtimeData from "@/controller/realtime/post/PostDataRealtime";
 
@@ -9,16 +9,16 @@ const getDataRealtime = async () => {
       Realtime(order_by: { updatedAt: desc }, limit: 1) {
         data
         UUID_User
+        updatedAt
       }
     }
   `;
   const handleDataUpdate = (data) => {
     // Olah data yang diperbarui di sini
     data.map((data) => {
-      // console.log(data);
+      // console.log("data realtime",data);
       // AddDataRealtime(data)
-      postRealtimeData(data)
-
+      postRealtimeData(data);
     });
   };
   const subscription = apolloClient.subscribe({
