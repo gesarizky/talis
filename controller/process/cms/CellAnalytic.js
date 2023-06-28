@@ -80,6 +80,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
         }
       });
       // FrameStore(dataUser, rms_sn, resultFrame); // store frame data
+      console.log("masuk data cell anal");
       FrameStore(
         dataUser,
         rms_sn,
