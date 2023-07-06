@@ -45,41 +45,36 @@ const CellAnalytic = async (RMSData, dataUser) => {
           const resulthealths = CellsHealth(filteredVcell, dataParams);
           const resultvoltages = CellsVoltage(filteredVcell);
 
-          // resultFrame.push({
-          //   rack_sn: rms_sn,
-          //   frame_name: frame_name,
-          //   health: resulthealths,
-          //   content: resultcontens,
-          //   voltage: resultvoltages,
-          //   temperatures: resultTemp,
-          // });
           resultFrame.push({
             rack_sn: rms_sn,
             frame_name: frame_name,
           });
           resultcontent.push({
+            UUID_User: dataUser,
             rack_sn: rms_sn,
             frame_name: frame_name,
             content: resultcontens,
           });
           resulthealth.push({
+            UUID_User: dataUser,
             rack_sn: rms_sn,
             frame_name: frame_name,
             health: resulthealths,
           });
           resultvoltage.push({
+            UUID_User: dataUser,
             rack_sn: rms_sn,
             frame_name: frame_name,
             voltage: resultvoltages,
           });
           resulttemperature.push({
+            UUID_User: dataUser,
             rack_sn: rms_sn,
             frame_name: frame_name,
             temperatures: resultTemp,
           });
         }
       });
-      // FrameStore(dataUser, rms_sn, resultFrame); // store frame data
       console.log("masuk data cell anal");
       FrameStore(
         dataUser,

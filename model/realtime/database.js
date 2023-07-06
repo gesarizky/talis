@@ -16,6 +16,6 @@ const RealtimeDb = DB.define("realtime", {
 export default RealtimeDb;
 
 (async () => {
-//   await DBREALTIME.sync({alter:true});
+  //   await DB.sync({alter:true});
   await DB.sync();
 })();

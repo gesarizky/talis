@@ -5,6 +5,7 @@ import DB from "@/config/database";
 const { DataTypes } = Sequelize;
 
 const HistoryCellHealth = DB.define("history_Cellhealth", {
+  rack_sn: DataTypes.STRING,
   frame_name: DataTypes.STRING,
   health: DataTypes.JSON,
 });

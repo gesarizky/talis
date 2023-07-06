@@ -1,4 +1,4 @@
-// "use strict";
+
 import { Sequelize } from "sequelize";
 import db from "@/config/param/Database";
 

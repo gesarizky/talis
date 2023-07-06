@@ -5,6 +5,7 @@ import DB from "@/config/database";
 const { DataTypes } = Sequelize;
 
 const HistoryCellVoltage = DB.define("history_Cellvoltage", {
+  rack_sn: DataTypes.STRING,
   frame_name: DataTypes.STRING,
   voltage: DataTypes.JSON,
 });
