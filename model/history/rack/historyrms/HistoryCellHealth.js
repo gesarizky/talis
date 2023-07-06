@@ -5,6 +5,7 @@ import DB from "@/config/database";
 const { DataTypes } = Sequelize;
 
 const HistoryCellHealth = DB.define("history_Cellhealth", {
+  UUID_User: DataTypes.STRING,
   rack_sn: DataTypes.STRING,
   frame_name: DataTypes.STRING,
   health: DataTypes.JSON,
@@ -13,6 +14,6 @@ const HistoryCellHealth = DB.define("history_Cellhealth", {
 export default HistoryCellHealth;
 
 (async () => {
-  // await DB.sync({ alter: true });
-  await DB.sync();
+  await DB.sync({ alter: true });
+  // await DB.sync();
 })();

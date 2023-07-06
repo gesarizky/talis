@@ -5,6 +5,7 @@ import DB from "@/config/database";
 const { DataTypes } = Sequelize;
 
 const HistoryCellTempe = DB.define("history_Celltemperature", {
+  UUID_User: DataTypes.STRING,
   rack_sn: DataTypes.STRING,
   frame_name: DataTypes.STRING,
   temperatures: DataTypes.JSON,
@@ -13,6 +14,6 @@ const HistoryCellTempe = DB.define("history_Celltemperature", {
 export default HistoryCellTempe;
 
 (async () => {
-  // await DB.sync({ alter: true });
-  await DB.sync();
+  await DB.sync({ alter: true });
+  // await DB.sync();
 })();
