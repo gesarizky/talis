@@ -14,6 +14,6 @@ const HistoryCellTempe = DB.define("history_Celltemperature", {
 export default HistoryCellTempe;
 
 (async () => {
-  await DB.sync({ alter: true });
-  // await DB.sync();
+  // await DB.sync({ alter: true });
+  await DB.sync();
 })();

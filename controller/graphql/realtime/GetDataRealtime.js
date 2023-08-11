@@ -6,7 +6,7 @@ import postRealtimeData from "@/controller/realtime/post/PostDataRealtime";
 const getDataRealtime = async () => {
   const GET_REALTIME_SUBCRIPTION = gql`
     subscription {
-      Realtime(order_by: { updatedAt: desc }, limit: 1) {
+      Realtime(order_by: { updatedAt: desc }) {
         data
         UUID_User
         updatedAt

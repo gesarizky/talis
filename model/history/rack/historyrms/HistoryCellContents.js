@@ -14,6 +14,6 @@ const HistoryCellContent = DB.define("history_Cellcontent", {
 export default HistoryCellContent;
 
 (async () => {
-  await DB.sync({ alter: true });
-  // await DB.sync();
+  // await DB.sync({ alter: true });
+  await DB.sync();
 })();

@@ -16,8 +16,8 @@ const getDataInverter = async () => {
       query: GET_LAST_CREATED_AT,
     });
     let lastCreatedAt =
-      lastCreatedAtResult.data.RMS[0]?.createdAt || "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
-
+      lastCreatedAtResult.data.Inverter[0]?.createdAt ||
+      "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
     const GET_INVERTER_SUBCRIPTION = gql`
       subscription GetNewInverterData($lastSeenTimestamp: timestamptz) {
         Inverter(where: { createdAt: { _gt: $lastSeenTimestamp } }) {
@@ -53,11 +53,11 @@ const getDataInverter = async () => {
         handleDataUpdate(data);
       },
       error: (error) => {
-        console.error("Subscription error:", error);
+        console.error("Subscription data inverter error:", error);
       },
     });
   } catch (error) {
-    console.error("Error fetching lastCreatedAt:", error);
+    console.error("Error fetching data inverter lastCreatedAt:", error);
   }
 };
 export default getDataInverter;

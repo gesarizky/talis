@@ -14,6 +14,6 @@ const HistoryCellVoltage = DB.define("history_Cellvoltage", {
 export default HistoryCellVoltage;
 
 (async () => {
-  await DB.sync({ alter: true });
-  // await DB.sync();
+  // await DB.sync({ alter: true });
+  await DB.sync();
 })();

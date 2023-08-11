@@ -14,6 +14,6 @@ const HistoryCellHealth = DB.define("history_Cellhealth", {
 export default HistoryCellHealth;
 
 (async () => {
-  await DB.sync({ alter: true });
-  // await DB.sync();
+  // await DB.sync({ alter: true });
+  await DB.sync();
 })();

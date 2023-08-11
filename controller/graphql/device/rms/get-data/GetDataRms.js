@@ -57,11 +57,11 @@ const getDataRms = async () => {
         handleDataUpdate(data);
       },
       error: (error) => {
-        console.error("Subscription error:", error);
+        console.error("Subscription data rms error:", error);
       },
     });
   } catch (error) {
-    console.error("Error fetching lastCreatedAt:", error);
+    console.error("Error fetching data rms lastCreatedAt:", error);
   }
 };
 

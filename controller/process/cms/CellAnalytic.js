@@ -91,7 +91,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
       FrameStore(dataUser, rms_sn, resultFrame); // store frame data
     }
   } catch (error) {
-    console.log(error);
+    console.log("error CellAnalytic :",error);
   }
 };
 

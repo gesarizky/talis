@@ -7,7 +7,7 @@ const ParseCMS = async (dataCms, dataUser) => {
 
     
   } catch (error) {
-    console.log(error);
+    console.log("error CmsController :",error);
   }
 };
 
