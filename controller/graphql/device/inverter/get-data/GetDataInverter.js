@@ -19,11 +19,12 @@ const getDataInverter = async () => {
       lastCreatedAtResult.data.Inverter[0]?.createdAt ||
       "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
     const GET_INVERTER_SUBCRIPTION = gql`
-      subscription GetNewInverterData($lastSeenTimestamp: timestamptz) {
+      subscription GetNewInverterData($lastSeenTimestamp: timestamptz = "${lastCreatedAt}") {
         Inverter(where: { createdAt: { _gt: $lastSeenTimestamp } }) {
           id
           data
           UUID_User
+          createdAt
         }
       }
     `;

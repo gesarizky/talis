@@ -6,7 +6,7 @@ import StoreHistoryVoltage from "@/controller/device/rms/storedata/history/Store
 
 const FrameStore = async (
   dataUser,
-  rms_sn,
+  rack_sn,
   listFrameAnalytic,
   datacontent,
   datahealth,
@@ -14,7 +14,7 @@ const FrameStore = async (
   datatemperature
 ) => {
   if (listFrameAnalytic) {
-    const rack_sn = rms_sn;
+    // const rack_sn = rms_sn;
     // const UUID_User = dataUser;
 
     if (Object.keys(rack_sn).length <= 0) {
@@ -35,13 +35,11 @@ const FrameStore = async (
     datatemperature.map((data) => {
       StoreHistoryTempe(data);
     });
-  
   } else {
-   
     const result = {
       UUID_User: dataUser,
-       rack_sn:rms_sn,
-      frame_name:"[]",
+      rack_sn: rack_sn,
+      frame_name: "[]",
       health: [],
       content: [],
       voltage: [],

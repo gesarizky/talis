@@ -3,10 +3,9 @@ import ResultInverterStatus from "./inverter-analysis-process/ProcessInverterSta
 import ResultEnergy from "./inverter-analysis-process/ProcessEnergy";
 import StoreDataHistory from "../storedata/history/AddDataHistory";
 
-const InverterAnalysis = async (datainverter, dataUser, dataRack) => {
+const InverterAnalysis = async (datainverter, dataUser, dataRack, dataSn) => {
   try {
     if (datainverter) {
-      const datainvertersn = datainverter.inverter_sn;
       //perhitungan power
       const datapower = await ResultPower(datainverter);
       //perhitungan energy
@@ -21,11 +20,11 @@ const InverterAnalysis = async (datainverter, dataUser, dataRack) => {
 
       const result = {
         UUID_User: dataUser,
+        rack_sn: dataRack,
+        inverter_sn: dataSn,
         data: {
-          rack_sn: dataRack,
           inverter_data: [
             {
-              inverter_sn: datainvertersn,
               mode: newdatainverterstatus,
               power: datapower,
               status: newdatastatusinverter,

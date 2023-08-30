@@ -4,7 +4,8 @@ const postInverterData = async (data) => {
     const dataolah = data.data.inverter_data[0];
     const dataUser = data.UUID_User;
     const dataRack = data.data.rack_sn;
-    await InverterAnalysis(dataolah, dataUser,dataRack);
+    const dataSn = data.data.inverter_sn;
+    await InverterAnalysis(dataolah, dataUser, dataRack, dataSn);
   } catch (error) {
     console.log(error);
   }

@@ -24,7 +24,8 @@ const CellAnalytic = async (RMSData, dataUser) => {
       const resultvoltage = [];
       const resulttemperature = [];
 
-      const rms_sn = RMSData.rack_sn;
+      const rack_sn = RMSData.rack_sn;
+      const rms_sn = RMSData.rms_sn;
 
       RMSData.cms_data.forEach(async (element) => {
         const cms = element;
@@ -46,30 +47,35 @@ const CellAnalytic = async (RMSData, dataUser) => {
           const resultvoltages = CellsVoltage(filteredVcell);
 
           resultFrame.push({
-            rack_sn: rms_sn,
+            rack_sn: rack_sn,
+            rms_sn: rms_sn,
             frame_name: frame_name,
           });
           resultcontent.push({
             UUID_User: dataUser,
-            rack_sn: rms_sn,
+            rack_sn: rack_sn,
+            rms_sn: rms_sn,
             frame_name: frame_name,
             content: resultcontens,
           });
           resulthealth.push({
             UUID_User: dataUser,
-            rack_sn: rms_sn,
+            rack_sn: rack_sn,
+            rms_sn: rms_sn,
             frame_name: frame_name,
             health: resulthealths,
           });
           resultvoltage.push({
             UUID_User: dataUser,
-            rack_sn: rms_sn,
+            rack_sn: rack_sn,
+            rms_sn: rms_sn,
             frame_name: frame_name,
             voltage: resultvoltages,
           });
           resulttemperature.push({
             UUID_User: dataUser,
-            rack_sn: rms_sn,
+            rack_sn: rack_sn,
+            rms_sn: rms_sn,
             frame_name: frame_name,
             temperatures: resultTemp,
           });
@@ -78,7 +84,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
       console.log("masuk data cell anal");
       FrameStore(
         dataUser,
-        rms_sn,
+        rack_sn,
         resultFrame,
         resultcontent,
         resulthealth,
@@ -86,9 +92,9 @@ const CellAnalytic = async (RMSData, dataUser) => {
         resulttemperature
       ); // store frame data
     } else {
-      const rms_sn = RMSData.rack_sn;
+      const rack_sn = RMSData.rack_sn;
       const resultFrame = null;
-      FrameStore(dataUser, rms_sn, resultFrame); // store frame data
+      FrameStore(dataUser, rack_sn, resultFrame); // store frame data
     }
   } catch (error) {
     console.log("error CellAnalytic :",error);

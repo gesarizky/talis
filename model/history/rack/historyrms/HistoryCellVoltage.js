@@ -7,6 +7,7 @@ const { DataTypes } = Sequelize;
 const HistoryCellVoltage = DB.define("history_Cellvoltage", {
   UUID_User: DataTypes.STRING,
   rack_sn: DataTypes.STRING,
+  rms_sn: DataTypes.STRING,
   frame_name: DataTypes.STRING,
   voltage: DataTypes.JSON,
 });

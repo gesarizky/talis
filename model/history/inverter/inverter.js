@@ -9,11 +9,10 @@ const HistoryInverter = DB.define(
   "history_inverter",
   {
     UUID_User: DataTypes.STRING,
+    rack_sn: DataTypes.STRING,
+    inverter_sn: DataTypes.STRING,
     data: DataTypes.JSON,
   },
-  {
-    paranoid: true,
-  }
 );
 
 export default HistoryInverter;
