@@ -37,8 +37,9 @@ const InverterAnalysis = async (datainverter, dataUser, dataRack, dataSn) => {
     } else {
       const result = {
         UUID_User: dataUser,
+        rack_sn: dataRack,
+        inverter_sn: dataSn,
         data: {
-          rack_sn: dataRack,
           inverter_data: [],
         },
       };

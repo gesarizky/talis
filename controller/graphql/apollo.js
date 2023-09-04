@@ -4,8 +4,8 @@ import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const httpLink = new HttpLink({
-  uri: process.env.HASURA_PROJECT_HTTP_ENDPOINT,
-  // uri: process.env.HASURA_LOCAL_PROJECT_HTTP_ENDPOINT,
+  // uri: process.env.HASURA_PROJECT_HTTP_ENDPOINT,
+  uri: process.env.HASURA_LOCAL_PROJECT_HTTP_ENDPOINT,
 
   headers: {
     "x-hasura-admin-secret": "",

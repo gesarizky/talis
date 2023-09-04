@@ -85,6 +85,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
       FrameStore(
         dataUser,
         rack_sn,
+        rms_sn,
         resultFrame,
         resultcontent,
         resulthealth,
@@ -93,8 +94,9 @@ const CellAnalytic = async (RMSData, dataUser) => {
       ); // store frame data
     } else {
       const rack_sn = RMSData.rack_sn;
+      const rms_sn = RMSData.rms_sn;
       const resultFrame = null;
-      FrameStore(dataUser, rack_sn, resultFrame); // store frame data
+      FrameStore(dataUser, rack_sn, rms_sn, resultFrame); // store frame data
     }
   } catch (error) {
     console.log("error CellAnalytic :",error);

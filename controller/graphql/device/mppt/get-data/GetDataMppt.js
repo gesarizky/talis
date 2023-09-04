@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 import { apolloClient } from "../../../apollo";
-import postRmsData from "@/controller/device/rms/post/PostRmsData";
+import postMpptData from "@/controller/device/mppt/post/PostMpptData";
 
-const getDataRms = async () => {
+const getDataMppt = async () => {
   try {
     const GET_LAST_CREATED_AT = gql`
       query GetLastCreatedAt {
-        RMS(limit: 1, order_by: { createdAt: desc }) {
+        MPPT(limit: 1, order_by: { createdAt: desc }) {
           createdAt
         }
       }
@@ -17,11 +17,11 @@ const getDataRms = async () => {
     });
 
     let lastCreatedAt =
-      lastCreatedAtResult.data.RMS[0]?.createdAt || "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
+      lastCreatedAtResult.data.MPPT[0]?.createdAt || "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
 
-    const GET_RMS_SUBCRIPTION = gql`
-      subscription GetNewRmsData($lastSeenTimestamp: timestamptz = "${lastCreatedAt}") {
-        RMS(where: { createdAt: { _gt: $lastSeenTimestamp } }) {
+    const GET_MPPT_SUBCRIPTION = gql`
+      subscription GetNewMpptData($lastSeenTimestamp: timestamptz = "${lastCreatedAt}") {
+        MPPT(where: { createdAt: { _gt: $lastSeenTimestamp } }) {
           UUID_User
           data
           id
@@ -31,7 +31,7 @@ const getDataRms = async () => {
     `;
 
     const handleDataUpdate = (data) => {
-      // console.log("data non filter :", data);
+      console.log("data non filter :", data);
       const newData = data.filter(
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );
@@ -39,12 +39,12 @@ const getDataRms = async () => {
         console.log("Processing new data:", dataItem);
         console.log("Waktu yang di track", lastCreatedAt);
         lastCreatedAt = dataItem.createdAt;
-        postRmsData(dataItem);
+        postMpptData(dataItem);
       });
     };
 
     const subscription = apolloClient.subscribe({
-      query: GET_RMS_SUBCRIPTION,
+      query: GET_MPPT_SUBCRIPTION,
       variables: {
         lastSeenTimestamp: lastCreatedAt,
       },
@@ -52,16 +52,16 @@ const getDataRms = async () => {
 
     subscription.subscribe({
       next: (result) => {
-        const data = result.data.RMS;
+        const data = result.data.MPPT;
         handleDataUpdate(data);
       },
       error: (error) => {
-        console.error("Subscription data rms error:", error);
+        console.error("Subscription data mppt error:", error);
       },
     });
   } catch (error) {
-    console.error("Error fetching data rms lastCreatedAt:", error);
+    console.error("Error fetching data mppt lastCreatedAt:", error);
   }
 };
 
-export default getDataRms;
+export default getDataMppt;

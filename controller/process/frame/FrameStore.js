@@ -7,6 +7,7 @@ import StoreHistoryVoltage from "@/controller/device/rms/storedata/history/Store
 const FrameStore = async (
   dataUser,
   rack_sn,
+  rms_sn,
   listFrameAnalytic,
   datacontent,
   datahealth,
@@ -39,6 +40,7 @@ const FrameStore = async (
     const result = {
       UUID_User: dataUser,
       rack_sn: rack_sn,
+      rms_sn : rms_sn,
       frame_name: "[]",
       health: [],
       content: [],
