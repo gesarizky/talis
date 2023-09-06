@@ -34,8 +34,8 @@ const getDataInverter = async () => {
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );
       newData.forEach((dataItem) => {
-        console.log("Processing new data:", dataItem);
-        console.log("Waktu yang di track", lastCreatedAt);
+        // console.log("Processing new data:", dataItem);
+        // console.log("Waktu yang di track", lastCreatedAt);
         lastCreatedAt = dataItem.createdAt;
         postInverterData(dataItem);
       });

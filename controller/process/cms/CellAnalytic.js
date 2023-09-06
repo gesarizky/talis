@@ -81,7 +81,6 @@ const CellAnalytic = async (RMSData, dataUser) => {
           });
         }
       });
-      console.log("masuk data cell anal");
       FrameStore(
         dataUser,
         rack_sn,

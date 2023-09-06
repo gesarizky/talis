@@ -2,6 +2,7 @@ import ResultPower from "./inverter-analysis-process/ProcessPower";
 import ResultInverterStatus from "./inverter-analysis-process/ProcessInverterStatus";
 import ResultEnergy from "./inverter-analysis-process/ProcessEnergy";
 import StoreDataHistory from "../storedata/history/AddDataHistory";
+import decimalFixed from "../../mppt/analyse/process/decimalFixed";
 
 const InverterAnalysis = async (datainverter, dataUser, dataRack, dataSn) => {
   try {
@@ -26,7 +27,7 @@ const InverterAnalysis = async (datainverter, dataUser, dataRack, dataSn) => {
           inverter_data: [
             {
               mode: newdatainverterstatus,
-              power: datapower,
+              power: await decimalFixed(datapower),
               status: newdatastatusinverter,
               code: newdatastatuserror,
             },

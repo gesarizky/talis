@@ -1,11 +1,7 @@
-
-const postMpptData = async (data) => {
+import MpptAnalysis from "../analyse/MpptAnalysis";
+const postMpptData = async (datamppt) => {
   try {
-    let dataolah = data.data;
-    const dataUser = data.UUID_User;
-    console.log("UUID_User :", dataUser);
-    console.log("Data Olah :", dataolah);
-    // ParseCMS(dataolah, dataUser);
+    await MpptAnalysis(datamppt);
   } catch (error) {
     console.log("error PostRmsData :", error);
   }

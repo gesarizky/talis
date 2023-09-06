@@ -23,7 +23,7 @@ const FrameStore = async (
       return;
     }
 
-    console.log("masuk framestore data ada");
+    
     datahealth.map((data) => {
       StoreHistoryHealth(data);
     });
