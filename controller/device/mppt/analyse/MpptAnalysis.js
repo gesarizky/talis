@@ -1,6 +1,7 @@
 import StoreHistoryMppt from "../storedata/history/AddDataMppt";
 import decimalFixed from "./process/decimalFixed";
 import getPower from "./process/getPower";
+import mpptStatus from "./process/mpptStatus";
 const MpptAnalysis = async (datamppt) => {
   try {
     const { UUID_User, data } = datamppt;
@@ -39,9 +40,9 @@ const MpptAnalysis = async (datamppt) => {
                     module_current: moduleCurrent,
                     module_power: await getPower(moduleVoltage, moduleCurrent),
                     module_temperature: datamodule.module_temperature,
-                    // state_0: datamodule.state_0,
-                    // state_1: datamodule.state_1,
-                    // state_2: datamodule.state_2,
+                    state_0: await mpptStatus(datamodule.state_0),
+                    state_1: await mpptStatus(datamodule.state_1),
+                    state_2: await mpptStatus(datamodule.state_2),
                   },
                 ],
               },
