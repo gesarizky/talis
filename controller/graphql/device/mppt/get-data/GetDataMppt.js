@@ -31,14 +31,24 @@ const getDataMppt = async () => {
     `;
 
     const handleDataUpdate = (data) => {
-      console.log("data non filter :", data);
+      // console.log("data non filter :", data);
       const newData = data.filter(
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );
+      let maxCreatedAt;
+
+      if (newData.length > 0) {
+        maxCreatedAt = newData[0].createdAt;
+      } else {
+        maxCreatedAt = undefined;
+      }
       newData.forEach((dataItem) => {
         // console.log("Processing new data:", dataItem);
         // console.log("Waktu yang di track", lastCreatedAt);
-        lastCreatedAt = dataItem.createdAt;
+        if (dataItem.createdAt > maxCreatedAt) {
+          maxCreatedAt = dataItem.createdAt;
+        }
+        lastCreatedAt = maxCreatedAt;
         postMpptData(dataItem);
       });
     };
