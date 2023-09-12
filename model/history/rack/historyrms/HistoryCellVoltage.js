@@ -1,8 +1,7 @@
-import { Sequelize } from "sequelize";
+import { DataTypes } from "sequelize";
 import DBHISTORY from "@/config/history/DBHistory";
 import DB from "@/config/database";
 
-const { DataTypes } = Sequelize;
 
 const HistoryCellVoltage = DB.define("history_Cellvoltage", {
   UUID_User: DataTypes.STRING,
@@ -10,6 +9,7 @@ const HistoryCellVoltage = DB.define("history_Cellvoltage", {
   rms_sn: DataTypes.STRING,
   frame_name: DataTypes.STRING,
   voltage: DataTypes.JSON,
+  timestamp: DataTypes.DATE,
 });
 
 export default HistoryCellVoltage;

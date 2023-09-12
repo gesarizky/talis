@@ -25,11 +25,13 @@ const getDataInverter = async () => {
           data
           UUID_User
           createdAt
+          timestamp
         }
       }
     `;
 
     const handleDataUpdate = (data) => {
+      // console.log("data non filter :", data);
       const newData = data.filter(
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );

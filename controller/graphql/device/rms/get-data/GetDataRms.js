@@ -26,12 +26,13 @@ const getDataRms = async () => {
           data
           id
           createdAt
+          timestamp
         }
       }
     `;
 
     const handleDataUpdate = (data) => {
-      // console.log("data non filter :", data);
+      console.log("data non filter :", data);
       const newData = data.filter(
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );

@@ -26,6 +26,7 @@ const getDataMppt = async () => {
           data
           id
           createdAt
+          timestamp
         }
       }
     `;

@@ -1,10 +1,9 @@
 import ParseCMS from "@/controller/process/cms/CmsController";
 
-const postRmsData = async (data) => {
+const postRmsData = async (dataRms) => {
   try {
-    let dataolah = data.data;
-    const dataUser = data.UUID_User;
-    ParseCMS(dataolah, dataUser);
+    const { data, UUID_User, timestamp } = dataRms;
+    ParseCMS(data, UUID_User, timestamp);
   } catch (error) {
     console.log("error PostRmsData :", error);
   }

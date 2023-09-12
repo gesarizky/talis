@@ -4,7 +4,13 @@ import ResultEnergy from "./inverter-analysis-process/ProcessEnergy";
 import StoreDataHistory from "../storedata/history/AddDataHistory";
 import decimalFixed from "../../mppt/analyse/process/decimalFixed";
 
-const InverterAnalysis = async (datainverter, dataUser, dataRack, dataSn) => {
+const InverterAnalysis = async (
+  datainverter,
+  dataUser,
+  dataRack,
+  dataSn,
+  timestamp
+) => {
   try {
     if (datainverter) {
       //perhitungan power
@@ -23,6 +29,7 @@ const InverterAnalysis = async (datainverter, dataUser, dataRack, dataSn) => {
         UUID_User: dataUser,
         rack_sn: dataRack,
         inverter_sn: dataSn,
+        timestamp: timestamp,
         data: {
           inverter_data: [
             {
@@ -40,6 +47,7 @@ const InverterAnalysis = async (datainverter, dataUser, dataRack, dataSn) => {
         UUID_User: dataUser,
         rack_sn: dataRack,
         inverter_sn: dataSn,
+        timestamp: timestamp,
         data: {
           inverter_data: [],
         },

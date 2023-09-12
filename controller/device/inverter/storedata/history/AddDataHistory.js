@@ -1,14 +1,8 @@
 import HistoryInverter from "@/model/history/inverter/inverter";
 
 const StoreDataHistory = async (datainverter) => {
-  const {data,UUID_User,rack_sn,inverter_sn} = datainverter
   try {
-    await HistoryInverter.create({
-      UUID_User: UUID_User,
-      rack_sn:rack_sn,
-      inverter_sn:inverter_sn,
-      data: data,
-    });
+    await HistoryInverter.create(datainverter);
   } catch (error) {
     console.error("Terjadi kesalahan:", error);
     throw {

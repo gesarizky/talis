@@ -1,11 +1,16 @@
 import InverterAnalysis from "../analyse/InverterAnalysis";
-const postInverterData = async (data) => {
+const postInverterData = async (dataInverter) => {
   try {
-    const dataolah = data.data.inverter_data[0];
-    const dataUser = data.UUID_User;
-    const dataRack = data.data.rack_sn;
-    const dataSn = data.data.inverter_sn;
-    await InverterAnalysis(dataolah, dataUser, dataRack, dataSn);
+    const { UUID_User, timestamp, data } = dataInverter;
+    const dataolah = dataInverter.data.inverter_data[0];
+    const { rack_sn, inverter_sn } = data;
+    await InverterAnalysis(
+      dataolah,
+      UUID_User,
+      rack_sn,
+      inverter_sn,
+      timestamp
+    );
   } catch (error) {
     console.log(error);
   }

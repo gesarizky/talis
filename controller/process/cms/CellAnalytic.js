@@ -7,7 +7,7 @@ import TempAnalytic from "./TempAnalytic";
 import FrameStore from "../frame/FrameStore";
 import GetParam from "@/controller/param/GetParam";
 
-const CellAnalytic = async (RMSData, dataUser) => {
+const CellAnalytic = async (RMSData, dataUser, timestamp) => {
   try {
     if (RMSData.cms_data[0]) {
       const device_sn = {}; // default config
@@ -50,6 +50,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
             rack_sn: rack_sn,
             rms_sn: rms_sn,
             frame_name: frame_name,
+            timestamp: timestamp,
           });
           resultcontent.push({
             UUID_User: dataUser,
@@ -57,6 +58,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
             rms_sn: rms_sn,
             frame_name: frame_name,
             content: resultcontens,
+            timestamp: timestamp,
           });
           resulthealth.push({
             UUID_User: dataUser,
@@ -64,6 +66,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
             rms_sn: rms_sn,
             frame_name: frame_name,
             health: resulthealths,
+            timestamp: timestamp,
           });
           resultvoltage.push({
             UUID_User: dataUser,
@@ -71,6 +74,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
             rms_sn: rms_sn,
             frame_name: frame_name,
             voltage: resultvoltages,
+            timestamp: timestamp,
           });
           resulttemperature.push({
             UUID_User: dataUser,
@@ -78,6 +82,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
             rms_sn: rms_sn,
             frame_name: frame_name,
             temperatures: resultTemp,
+            timestamp: timestamp,
           });
         }
       });
@@ -85,6 +90,7 @@ const CellAnalytic = async (RMSData, dataUser) => {
         dataUser,
         rack_sn,
         rms_sn,
+        timestamp,
         resultFrame,
         resultcontent,
         resulthealth,
@@ -95,10 +101,10 @@ const CellAnalytic = async (RMSData, dataUser) => {
       const rack_sn = RMSData.rack_sn;
       const rms_sn = RMSData.rms_sn;
       const resultFrame = null;
-      FrameStore(dataUser, rack_sn, rms_sn, resultFrame); // store frame data
+      FrameStore(dataUser, rack_sn, rms_sn, timestamp, resultFrame); // store frame data
     }
   } catch (error) {
-    console.log("error CellAnalytic :",error);
+    console.log("error CellAnalytic :", error);
   }
 };
 

@@ -4,7 +4,7 @@ import getPower from "./process/getPower";
 import mpptStatus from "./process/mpptStatus";
 const MpptAnalysis = async (datamppt) => {
   try {
-    const { UUID_User, data } = datamppt;
+    const { UUID_User, data, timestamp } = datamppt;
     const { mppt_sn, rack_sn } = data;
     const DataSystem = data.mppt_data;
     if (DataSystem[0]) {
@@ -26,6 +26,7 @@ const MpptAnalysis = async (datamppt) => {
               mppt_sn: mppt_sn,
               group: groupNumber,
               module: datamodule.module_number,
+              timestamp: timestamp,
               data: {
                 mppt_data: [
                   {
@@ -58,6 +59,7 @@ const MpptAnalysis = async (datamppt) => {
         mppt_sn: mppt_sn,
         group: null,
         module: null,
+        timestamp: timestamp,
         data: {
           mppt_data: [],
         },

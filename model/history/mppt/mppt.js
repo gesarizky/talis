@@ -11,6 +11,7 @@ const HistoryMppt = DB.define("history_mppt", {
   group: DataTypes.INTEGER,
   module: DataTypes.INTEGER,
   data: DataTypes.JSON,
+  timestamp: DataTypes.DATE,
 });
 
 export default HistoryMppt;
