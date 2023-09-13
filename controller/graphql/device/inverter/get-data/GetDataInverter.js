@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { apolloClient } from "../../../apollo";
-import postInverterData from "../../../../device/inverter/post/PostInverterData";
+import postInverterData from "@/controller/device/inverter/post/PostInverterData";
 
 const getDataInverter = async () => {
   try {
@@ -15,15 +15,17 @@ const getDataInverter = async () => {
     const lastCreatedAtResult = await apolloClient.query({
       query: GET_LAST_CREATED_AT,
     });
+
     let lastCreatedAt =
       lastCreatedAtResult.data.Inverter[0]?.createdAt ||
       "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
+
     const GET_INVERTER_SUBCRIPTION = gql`
       subscription GetNewInverterData($lastSeenTimestamp: timestamptz = "${lastCreatedAt}") {
         Inverter(where: { createdAt: { _gt: $lastSeenTimestamp } }) {
-          id
-          data
           UUID_User
+          data
+          id
           createdAt
           timestamp
         }
@@ -31,7 +33,6 @@ const getDataInverter = async () => {
     `;
 
     const handleDataUpdate = (data) => {
-      // console.log("data non filter :", data);
       const newData = data.filter(
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );
@@ -42,9 +43,9 @@ const getDataInverter = async () => {
       } else {
         maxCreatedAt = undefined;
       }
+
       newData.forEach((dataItem) => {
-        // console.log("Processing new data:", dataItem);
-        // console.log("Waktu yang di track", lastCreatedAt);
+        console.log("Processing new inverter data:", dataItem.UUID_User);
         if (dataItem.createdAt > maxCreatedAt) {
           maxCreatedAt = dataItem.createdAt;
         }
@@ -53,24 +54,32 @@ const getDataInverter = async () => {
       });
     };
 
-    const subscription = apolloClient.subscribe({
-      query: GET_INVERTER_SUBCRIPTION,
-      variables: {
-        lastSeenTimestamp: lastCreatedAt,
-      },
-    });
+    const subscribeToInverter = () => {
+      const subscription = apolloClient.subscribe({
+        query: GET_INVERTER_SUBCRIPTION,
+        variables: {
+          lastSeenTimestamp: lastCreatedAt,
+        },
+      });
+      console.log("Attempting to connect inverter subscription...");
+      subscription.subscribe({
+        next: (result) => {
+          const data = result.data.Inverter;
+          handleDataUpdate(data);
+        },
+        error: (error) => {
+          console.error("Subscription data inverter error:", error.message);
+          // Coba kembali berlangganan saat sambungan terputus
+          setTimeout(subscribeToInverter, 5000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+        },
+      });
+    };
 
-    subscription.subscribe({
-      next: (result) => {
-        const data = result.data.Inverter;
-        handleDataUpdate(data);
-      },
-      error: (error) => {
-        console.error("Subscription data inverter error:", error);
-      },
-    });
+    // Mulai berlangganan saat program pertama kali dijalankan
+    subscribeToInverter();
   } catch (error) {
-    console.error("Error fetching data inverter lastCreatedAt:", error);
+    console.error("Error fetching data inverter lastCreatedAt:", error.message);
   }
 };
+
 export default getDataInverter;

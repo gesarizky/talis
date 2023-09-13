@@ -32,11 +32,9 @@ const getDataRms = async () => {
     `;
 
     const handleDataUpdate = (data) => {
-      console.log("data non filter :", data);
       const newData = data.filter(
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );
-
       let maxCreatedAt;
 
       if (newData.length > 0) {
@@ -46,8 +44,7 @@ const getDataRms = async () => {
       }
 
       newData.forEach((dataItem) => {
-        // console.log("Processing new data:", dataItem.UUID_User);
-        // console.log("Waktu yang di track", lastCreatedAt);
+        console.log("Processing new rms data:", dataItem.UUID_User);
         if (dataItem.createdAt > maxCreatedAt) {
           maxCreatedAt = dataItem.createdAt;
         }
@@ -56,24 +53,31 @@ const getDataRms = async () => {
       });
     };
 
-    const subscription = apolloClient.subscribe({
-      query: GET_RMS_SUBCRIPTION,
-      variables: {
-        lastSeenTimestamp: lastCreatedAt,
-      },
-    });
+    const subscribeToRms = () => {
+      const subscription = apolloClient.subscribe({
+        query: GET_RMS_SUBCRIPTION,
+        variables: {
+          lastSeenTimestamp: lastCreatedAt,
+        },
+      });
+      console.log("Attempting to connect rms subscription...");
+      subscription.subscribe({
+        next: (result) => {
+          const data = result.data.RMS;
+          handleDataUpdate(data);
+        },
+        error: (error) => {
+          console.error("Subscription data rms error:", error.message);
+          // Coba kembali berlangganan saat sambungan terputus
+          setTimeout(subscribeToRms, 5000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+        },
+      });
+    };
 
-    subscription.subscribe({
-      next: (result) => {
-        const data = result.data.RMS;
-        handleDataUpdate(data);
-      },
-      error: (error) => {
-        console.error("Subscription data rms error:", error);
-      },
-    });
+    // Mulai berlangganan saat program pertama kali dijalankan
+    subscribeToRms();
   } catch (error) {
-    console.error("Error fetching data rms lastCreatedAt:", error);
+    console.error("Error fetching data rms lastCreatedAt:", error.message);
   }
 };
 

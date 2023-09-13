@@ -32,7 +32,6 @@ const getDataMppt = async () => {
     `;
 
     const handleDataUpdate = (data) => {
-      // console.log("data non filter :", data);
       const newData = data.filter(
         (dataItem) => dataItem.createdAt > lastCreatedAt
       );
@@ -43,9 +42,9 @@ const getDataMppt = async () => {
       } else {
         maxCreatedAt = undefined;
       }
+
       newData.forEach((dataItem) => {
-        // console.log("Processing new data:", dataItem);
-        // console.log("Waktu yang di track", lastCreatedAt);
+        console.log("Processing new mppt data:", dataItem.UUID_User);
         if (dataItem.createdAt > maxCreatedAt) {
           maxCreatedAt = dataItem.createdAt;
         }
@@ -54,24 +53,31 @@ const getDataMppt = async () => {
       });
     };
 
-    const subscription = apolloClient.subscribe({
-      query: GET_MPPT_SUBCRIPTION,
-      variables: {
-        lastSeenTimestamp: lastCreatedAt,
-      },
-    });
+    const subscribeToMppt = () => {
+      const subscription = apolloClient.subscribe({
+        query: GET_MPPT_SUBCRIPTION,
+        variables: {
+          lastSeenTimestamp: lastCreatedAt,
+        },
+      });
+      console.log("Attempting to connect mppt subscription...");
+      subscription.subscribe({
+        next: (result) => {
+          const data = result.data.MPPT;
+          handleDataUpdate(data);
+        },
+        error: (error) => {
+          console.error("Subscription data mppt error:", error.message);
+          // Coba kembali berlangganan saat sambungan terputus
+          setTimeout(subscribeToMppt, 5000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+        },
+      });
+    };
 
-    subscription.subscribe({
-      next: (result) => {
-        const data = result.data.MPPT;
-        handleDataUpdate(data);
-      },
-      error: (error) => {
-        console.error("Subscription data mppt error:", error);
-      },
-    });
+    // Mulai berlangganan saat program pertama kali dijalankan
+    subscribeToMppt();
   } catch (error) {
-    console.error("Error fetching data mppt lastCreatedAt:", error);
+    console.error("Error fetching data mppt lastCreatedAt:", error.message);
   }
 };
 

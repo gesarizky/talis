@@ -5,9 +5,8 @@ import styles from "@/styles/Home.module.css";
 import getDataInverter from "@/controller/graphql/device/inverter/get-data/GetDataInverter";
 import getDataRms from "@/controller/graphql/device/rms/get-data/GetDataRms";
 import getDataMppt from "@/controller/graphql/device/mppt/get-data/GetDataMppt";
-import getDataAlert from "@/controller/graphql/alert/GetDataAlert";
-import getDataRealtime from "@/controller/graphql/realtime/GetDataRealtime";
-
+// import getDataAlert from "@/controller/graphql/alert/GetDataAlert";
+// import getDataRealtime from "@/controller/graphql/realtime/GetDataRealtime";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -130,7 +129,7 @@ export const getServerSideProps = async () => {
   await getDataInverter();
   await getDataRms();
   await getDataMppt();
-  await getDataAlert();
-  await getDataRealtime()
+  // await getDataAlert();
+  // await getDataRealtime();
   return { props: { message: "start" } };
 };
