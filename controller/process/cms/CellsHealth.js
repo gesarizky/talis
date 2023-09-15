@@ -9,11 +9,11 @@ const CellsHealth = (dataVcell, modelParam) => {
       (maxVcell - value) / configModelParam.maximumDifferentCell;
     const dataHealth =
       rawHealth > 0 ? parseFloat((rawHealth * 100).toFixed(1)) : 0; // if raw health > 0, x with percent, if not, set 0
-    
-      return dataHealth;
+
+    return dataHealth;
   });
 
-  const result =  Health ;
+  const result = Health;
 
   return result;
 };

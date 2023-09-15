@@ -44,7 +44,7 @@ const getDataRms = async () => {
       }
 
       newData.forEach((dataItem) => {
-        console.log("Processing new rms data:", dataItem.UUID_User);
+        // console.log("Processing new rms data:", dataItem.UUID_User);
         if (dataItem.createdAt > maxCreatedAt) {
           maxCreatedAt = dataItem.createdAt;
         }

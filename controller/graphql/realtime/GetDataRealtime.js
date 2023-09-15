@@ -21,17 +21,24 @@ const getDataRealtime = async () => {
       postRealtimeData(data);
     });
   };
-  const subscription = apolloClient.subscribe({
-    query: GET_REALTIME_SUBCRIPTION,
-  });
-  subscription.subscribe({
-    next: (result) => {
-      const data = result.data.Realtime;
-      handleDataUpdate(data);
-    },
-    error: (error) => {
-      console.error("Subscription error:", error);
-    },
-  });
+
+  const subscribeToRealtime = () => {
+    const subscription = apolloClient.subscribe({
+      query: GET_REALTIME_SUBCRIPTION,
+    });
+    console.log("Attempting to connect realtime subscription...");
+    subscription.subscribe({
+      next: (result) => {
+        const data = result.data.Realtime;
+        handleDataUpdate(data);
+      },
+      error: (error) => {
+        console.error("Subscription data realtime error:", error.message);
+        // Coba kembali berlangganan saat sambungan terputus
+        setTimeout(subscribeToRealtime, 5000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+      },
+    });
+  };
+  subscribeToRealtime();
 };
 export default getDataRealtime;
