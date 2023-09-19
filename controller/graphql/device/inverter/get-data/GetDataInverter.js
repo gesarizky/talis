@@ -1,27 +1,16 @@
 import { gql } from "@apollo/client";
 import { apolloClient } from "../../../apollo";
 import postInverterData from "@/controller/device/inverter/post/PostInverterData";
+import HistoryInverter from "@/model/history/inverter/inverter";
+
 
 const getDataInverter = async () => {
   try {
-    const GET_LAST_CREATED_AT = gql`
-      query GetLastCreatedAt {
-        Inverter(limit: 1, order_by: { createdAt: desc }) {
-          createdAt
-        }
-      }
-    `;
+    const timestamp = await HistoryInverter.max("createdAt");
+    let lastCreatedAt = timestamp || "1970-01-01T00:00:00.000Z";
 
-    const lastCreatedAtResult = await apolloClient.query({
-      query: GET_LAST_CREATED_AT,
-    });
-
-    let lastCreatedAt =
-      lastCreatedAtResult.data.Inverter[0]?.createdAt ||
-      "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
-
-    const GET_INVERTER_SUBCRIPTION = gql`
-      subscription GetNewInverterData($lastSeenTimestamp: timestamptz = "${lastCreatedAt}") {
+    const GET_INVERTER_SUBSCRIPTION = gql`
+      subscription GetNewInverterData($lastSeenTimestamp: timestamptz!) {
         Inverter(where: { createdAt: { _gt: $lastSeenTimestamp } }) {
           UUID_User
           data
@@ -33,30 +22,35 @@ const getDataInverter = async () => {
     `;
 
     const handleDataUpdate = (data) => {
+      // console.log("Received new inverter data:", data);
+
+      const newDateLastCreatedAt = new Date(lastCreatedAt); // Konversi lastCreatedAt ke objek Date
       const newData = data.filter(
-        (dataItem) => dataItem.createdAt > lastCreatedAt
+        (dataItem) => new Date(dataItem.createdAt) > newDateLastCreatedAt
       );
+
       let maxCreatedAt;
 
       if (newData.length > 0) {
-        maxCreatedAt = newData[0].createdAt;
+        maxCreatedAt = new Date(newData[0].createdAt);
       } else {
         maxCreatedAt = undefined;
       }
 
       newData.forEach((dataItem) => {
-        // console.log("Processing new inverter data:", dataItem.UUID_User);
-        if (dataItem.createdAt > maxCreatedAt) {
-          maxCreatedAt = dataItem.createdAt;
+        // console.log("Processing new inverter data:", dataItem);
+        const createdAt = new Date(dataItem.createdAt);
+        if (createdAt > maxCreatedAt) {
+          maxCreatedAt = createdAt;
         }
-        lastCreatedAt = maxCreatedAt;
-        postInverterData(dataItem);
+        lastCreatedAt = maxCreatedAt.toISOString(); // Kembali konversi ke string ISO
+        postInverterData(dataItem); // Process the data as needed
       });
     };
 
     const subscribeToInverter = () => {
       const subscription = apolloClient.subscribe({
-        query: GET_INVERTER_SUBCRIPTION,
+        query: GET_INVERTER_SUBSCRIPTION,
         variables: {
           lastSeenTimestamp: lastCreatedAt,
         },
@@ -69,13 +63,13 @@ const getDataInverter = async () => {
         },
         error: (error) => {
           console.error("Subscription data inverter error:", error.message);
-          // Coba kembali berlangganan saat sambungan terputus
-          setTimeout(subscribeToInverter, 5000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+          // Retry subscribing when connection is lost
+          setTimeout(subscribeToInverter, 20000); // Retry every * seconds (adjust as needed)
         },
       });
     };
 
-    // Mulai berlangganan saat program pertama kali dijalankan
+    // Start subscribing when the program is first run
     subscribeToInverter();
   } catch (error) {
     console.error("Error fetching data inverter lastCreatedAt:", error.message);
@@ -83,3 +77,5 @@ const getDataInverter = async () => {
 };
 
 export default getDataInverter;
+
+

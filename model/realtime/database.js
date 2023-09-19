@@ -1,16 +1,16 @@
-
-import { Sequelize } from "sequelize";
+import { DataTypes } from "sequelize";
 import DBREALTIME from "@/config/realtime/DBRealtime";
 import DB from "@/config/database";
 
-const { DataTypes } = Sequelize;
-
 const RealtimeDb = DB.define("realtime", {
-  UUID_User: {
+  rms_sn: {
     unique: "UUID_User",
     type: DataTypes.STRING,
   },
-  data: DataTypes.JSON,
+  rack_sn: DataTypes.STRING,
+  UUID_User: DataTypes.STRING,
+  health: DataTypes.FLOAT,
+  content: DataTypes.FLOAT,
 });
 
 export default RealtimeDb;

@@ -1,26 +1,15 @@
 import { gql } from "@apollo/client";
 import { apolloClient } from "../../../apollo";
 import postRmsData from "@/controller/device/rms/post/PostRmsData";
+import HistoryCellHealth from "@/model/history/rack/historyrms/HistoryCellHealth";
 
 const getDataRms = async () => {
   try {
-    const GET_LAST_CREATED_AT = gql`
-      query GetLastCreatedAt {
-        RMS(limit: 1, order_by: { createdAt: desc }) {
-          createdAt
-        }
-      }
-    `;
-
-    const lastCreatedAtResult = await apolloClient.query({
-      query: GET_LAST_CREATED_AT,
-    });
-
-    let lastCreatedAt =
-      lastCreatedAtResult.data.RMS[0]?.createdAt || "1970-01-01T00:00:00.000Z"; // Jika tidak ada data, gunakan timestamp awal
+    const timestamp = await HistoryCellHealth.max("createdAt");
+    let lastCreatedAt = timestamp || "1970-01-01T00:00:00.000Z";
 
     const GET_RMS_SUBCRIPTION = gql`
-      subscription GetNewRmsData($lastSeenTimestamp: timestamptz = "${lastCreatedAt}") {
+      subscription GetNewRmsData($lastSeenTimestamp: timestamptz!) {
         RMS(where: { createdAt: { _gt: $lastSeenTimestamp } }) {
           UUID_User
           data
@@ -32,23 +21,25 @@ const getDataRms = async () => {
     `;
 
     const handleDataUpdate = (data) => {
+      const newDateLastCreatedAt = new Date(lastCreatedAt); // Konversi lastCreatedAt ke objek Date
       const newData = data.filter(
-        (dataItem) => dataItem.createdAt > lastCreatedAt
+        (dataItem) => new Date(dataItem.createdAt) > newDateLastCreatedAt
       );
       let maxCreatedAt;
 
       if (newData.length > 0) {
-        maxCreatedAt = newData[0].createdAt;
+        maxCreatedAt = new Date(newData[0].createdAt);
       } else {
         maxCreatedAt = undefined;
       }
 
       newData.forEach((dataItem) => {
         // console.log("Processing new rms data:", dataItem.UUID_User);
-        if (dataItem.createdAt > maxCreatedAt) {
-          maxCreatedAt = dataItem.createdAt;
+        const createdAt = new Date(dataItem.createdAt);
+        if (createdAt > maxCreatedAt) {
+          maxCreatedAt = createdAt;
         }
-        lastCreatedAt = maxCreatedAt;
+        lastCreatedAt = maxCreatedAt.toISOString(); // Kembali konversi ke string ISO
         postRmsData(dataItem);
       });
     };
@@ -69,7 +60,7 @@ const getDataRms = async () => {
         error: (error) => {
           console.error("Subscription data rms error:", error.message);
           // Coba kembali berlangganan saat sambungan terputus
-          setTimeout(subscribeToRms, 5000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+          setTimeout(subscribeToRms, 20000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
         },
       });
     };

@@ -1,14 +1,13 @@
 import AddDataRealtime from "../storedata/AadDataRealtime";
-const postRealtimeData = async (data) => {
+const postRealtimeData = async (datarms) => {
   try {
-    if (data.data) {
-        // console.log("ada");
-        await AddDataRealtime(data);
-    } else {
-        // console.log("tak ada");
-    }
+    const { data, UUID_User , rms_sn } = datarms;
+    const { content, health, rack_sn } = data;
+    // console.log("ada");
+    const result = { UUID_User, content, health, rack_sn, rms_sn };
+    await AddDataRealtime(result);
   } catch (error) {
-    console.log(error);
+    console.log("error : ~ file PostDataRealtime.js : ", error.message);
   }
 };
 
