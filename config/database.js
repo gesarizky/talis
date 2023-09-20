@@ -10,6 +10,10 @@ const DATABASE_PORT = process.env.DATABASE_PORT;
 const DATABASE_TYPE = process.env.DATABASE_TYPE;
 const DATABASE_LOGGING = process.env.DATABSE_LOGGING;
 
+/**
+ * @description inisiasi config database talis30server
+ */
+
 const DB = new Sequelize(DATABASE, DATABASE_USERNAME, DATABASE_PASSWORD, {
   host: DATABASE_HOST,
   port: DATABASE_PORT,

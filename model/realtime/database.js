@@ -1,6 +1,9 @@
 import { DataTypes } from "sequelize";
-import DBREALTIME from "@/config/realtime/DBRealtime";
 import DB from "@/config/database";
+
+/**
+ * @description tabel realtime rms
+ */
 
 const RealtimeDb = DB.define("realtime", {
   rms_sn: {

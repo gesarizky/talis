@@ -4,6 +4,15 @@ import ResultEnergy from "./inverter-analysis-process/ProcessEnergy";
 import StoreDataHistory from "../storedata/history/AddDataHistory";
 import decimalFixed from "../../mppt/analyse/process/decimalFixed";
 
+/**
+ * @description fungsi utama untuk analisis data inverter
+ * @param {Object} datainverter 
+ * @param {String} dataUser 
+ * @param {String} dataRack 
+ * @param {String} dataSn 
+ * @param {Date} timestamp 
+ */
+
 const InverterAnalysis = async (
   datainverter,
   dataUser,
@@ -55,10 +64,7 @@ const InverterAnalysis = async (
       await StoreDataHistory(result);
     }
   } catch (error) {
-    console.error(error);
-    throw {
-      message: error.message,
-    };
+    console.error("error : ~ file InverterAnalysis.js : ",error);
   }
 };
 

@@ -7,6 +7,13 @@ import TempAnalytic from "./TempAnalytic";
 import FrameStore from "../frame/FrameStore";
 import GetParam from "@/controller/param/GetParam";
 
+/**
+ * @description fungsi utama analisis cell tiap frame
+ * @param {Object} RMSData data raw yang sudah di restruktur
+ * @param {String} dataUser UUID User
+ * @param {Date} timestamp waktu dikirim
+ */
+
 const CellAnalytic = async (RMSData, dataUser, timestamp) => {
   try {
     if (RMSData.cms_data[0]) {
@@ -104,7 +111,7 @@ const CellAnalytic = async (RMSData, dataUser, timestamp) => {
       FrameStore(dataUser, rack_sn, rms_sn, timestamp, resultFrame); // store frame data
     }
   } catch (error) {
-    console.log("error CellAnalytic :", error);
+    console.log("error : ~ file CellAnalytic.js :", error);
   }
 };
 

@@ -3,6 +3,10 @@ import { apolloClient } from "../../../apollo";
 import postInverterData from "@/controller/device/inverter/post/PostInverterData";
 import HistoryInverter from "@/model/history/inverter/inverter";
 
+/**
+ * @description mengambil data inverter dan mengolah data
+ */
+
 
 const getDataInverter = async () => {
   try {

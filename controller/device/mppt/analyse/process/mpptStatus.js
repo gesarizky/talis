@@ -1,3 +1,10 @@
+
+/**
+ * @description mengolah data raw mppt menjadi status mppt
+ * @param {Object} value data raw mppt
+ * @returns status mppt
+ */
+
 const mpptStatus = async (value) => {
   let status = [];
   async function decimalToBinary(decimal) {

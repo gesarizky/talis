@@ -1,9 +1,9 @@
-
-import { Sequelize } from "sequelize";
-import db from "@/config/param/Database";
+import { DataTypes } from "sequelize";
 import DB from "@/config/database";
 
-const { DataTypes } = Sequelize;
+/**
+ * @description tabel parameter setting
+ */
 
 const ParamSetting = DB.define("paramsetting", {
   device_sn: {

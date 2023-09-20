@@ -1,9 +1,9 @@
-// "use strict";
-import { Sequelize } from "sequelize";
-import db from "@/config/param/Database";
+import { DataTypes } from "sequelize";
 import DB from "@/config/database";
 
-const { DataTypes } = Sequelize;
+/**
+ * @description tabel param alert
+ */
 
 const AlertDb = DB.define("alert", {
   UUID_User: DataTypes.STRING,

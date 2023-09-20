@@ -3,6 +3,10 @@ import { apolloClient } from "../../../apollo";
 import postRmsData from "@/controller/device/rms/post/PostRmsData";
 import HistoryCellHealth from "@/model/history/rack/historyrms/HistoryCellHealth";
 
+/**
+ * @description mengambil data rms dan mengolah data
+ */
+
 const getDataRms = async () => {
   try {
     const timestamp = await HistoryCellHealth.max("createdAt");
@@ -60,7 +64,7 @@ const getDataRms = async () => {
         error: (error) => {
           console.error("Subscription data rms error:", error.message);
           // Coba kembali berlangganan saat sambungan terputus
-          setTimeout(subscribeToRms, 20000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+          setTimeout(subscribeToRms, 20000); // Coba kembali setiap * detik (sesuaikan dengan kebutuhan Anda)
         },
       });
     };

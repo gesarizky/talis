@@ -1,6 +1,9 @@
 import { DataTypes } from "sequelize";
-import DBHISTORY from "@/config/history/DBHistory";
 import DB from "@/config/database";
+
+/**
+ * @description tabel history cell health
+ */
 
 const HistoryCellHealth = DB.define("history_Cellhealth", {
   UUID_User: DataTypes.STRING,

@@ -2,6 +2,12 @@ import StoreHistoryMppt from "../storedata/history/AddDataMppt";
 import decimalFixed from "./process/decimalFixed";
 import getPower from "./process/getPower";
 import mpptStatus from "./process/mpptStatus";
+
+/**
+ * @description fungsi utama analisis mppt
+ * @param {Object} datamppt data raw mppt 
+ */
+
 const MpptAnalysis = async (datamppt) => {
   try {
     const { UUID_User, data, timestamp } = datamppt;

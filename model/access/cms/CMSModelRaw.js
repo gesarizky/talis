@@ -1,3 +1,8 @@
+
+/**
+ * @description constructor cms raw
+ */
+
 class CMSModelRaw {
     constructor(data) {
         this.msg_count = data.msg_count;

@@ -3,6 +3,10 @@ import { apolloClient } from "../../../apollo";
 import postMpptData from "@/controller/device/mppt/post/PostMpptData";
 import HistoryMppt from "@/model/history/mppt/mppt";
 
+/**
+ * @description mengambil data mppt dan mengolah data
+ */
+
 const getDataMppt = async () => {
   try {
     const timestamp = await HistoryMppt.max("createdAt");
@@ -60,7 +64,7 @@ const getDataMppt = async () => {
         error: (error) => {
           console.error("Subscription data mppt error:", error.message);
           // Coba kembali berlangganan saat sambungan terputus
-          setTimeout(subscribeToMppt, 20000); // Coba kembali setiap 5 detik (sesuaikan dengan kebutuhan Anda)
+          setTimeout(subscribeToMppt, 20000); // Coba kembali setiap * detik (sesuaikan dengan kebutuhan Anda)
         },
       });
     };

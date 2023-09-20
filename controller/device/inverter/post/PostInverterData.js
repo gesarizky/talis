@@ -1,4 +1,10 @@
 import InverterAnalysis from "../analyse/InverterAnalysis";
+
+/**
+ * @description struktur ulang dan mengirim data raw untuk di analisis
+ * @param {Object} dataInverter data raw inverter
+ */
+
 const postInverterData = async (dataInverter) => {
   try {
     const { UUID_User, timestamp, data } = dataInverter;
@@ -12,7 +18,7 @@ const postInverterData = async (dataInverter) => {
       timestamp
     );
   } catch (error) {
-    console.log(error);
+    console.log("error : ~ file PostInverterData.js : ", error);
   }
 };
 

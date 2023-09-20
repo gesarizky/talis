@@ -1,25 +1,23 @@
-// import InverterStatusSetting from "@/models/param/InverterStatusSetting";
+/**
+ * @description mengidentifikasi status inverter
+ * @param {Object} datainverter data raw inverter
+ * @returns status inverter
+ */
 
 const ResultInverterStatus = async (datainverter) => {
   try {
-    // const data = await InverterStatusSetting.findOne({
-    //   where: { params: "temperature" },
-    // });
-    const data = { value: 60000 };
-    const datainverterstatus = datainverter.inverter_status;
-    const datapmodulestatus = datainverter.power_module_status;
-    const datatemperature = datainverter.power_module_ambient_temperature_mc;
-
+    const {
+      inverter_status,
+      power_module_status,
+      power_module_ambient_temperature_mc,
+    } = datainverter;
+    let newdatastatusinverter;
     let newdatainverterstatus = "";
-    if (datainverterstatus == 2) {
-      newdatainverterstatus = "charge";
-    } else if (datainverterstatus == 0) {
-      newdatainverterstatus = "discharge";
-    } else {
-      throw {
-        message: "inverter status data error",
-      };
-    }
+    let newdatastatuserror = { error: [], warning: [] };
+
+    if (inverter_status == 2) newdatainverterstatus = "charge";
+    if (inverter_status == 0) newdatainverterstatus = "discharge";
+
     function decimalToBinary(decimal) {
       let binary = [];
       while (decimal > 0) {
@@ -32,10 +30,8 @@ const ResultInverterStatus = async (datainverter) => {
       return binary;
     }
 
-    const [status2, status1, status0] = datapmodulestatus.map(decimalToBinary);
-
-    let newdatastatusinverter;
-    let newdatastatuserror = { error: [], warning: [] };
+    const [status2, status1, status0] =
+      power_module_status.map(decimalToBinary);
 
     if (
       status2
@@ -52,9 +48,12 @@ const ResultInverterStatus = async (datainverter) => {
       if (status1[3]) newdatastatuserror.error.push(6);
       if (status1[7]) newdatastatuserror.error.push(7);
       if (status0[7]) newdatastatuserror.error.push(8);
-    } else if (status1[3] === 0 && datatemperature >= data.value) {
+    } else if (
+      status1[3] === 0 &&
+      power_module_ambient_temperature_mc >= 60000
+    ) {
       newdatastatusinverter = "warning";
-      if (datatemperature >= 70000) {
+      if (power_module_ambient_temperature_mc >= 70000) {
         newdatastatusinverter = "error";
         newdatastatuserror.error.push(6);
       } else {
@@ -65,10 +64,7 @@ const ResultInverterStatus = async (datainverter) => {
     }
     return { newdatainverterstatus, newdatastatusinverter, newdatastatuserror };
   } catch (error) {
-    console.error(error);
-    throw {
-      message: error.message,
-    };
+    console.error("error : ~ file ProcessInverterStatus.js : ", error);
   }
 };
 

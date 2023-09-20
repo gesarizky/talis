@@ -1,3 +1,6 @@
+/**
+ * @description constructor limit cell
+ */
 class Batas {
     constructor(batasJSON) {
         const { badBawah, warningBawah, good, warningAtas, badAtas } = batasJSON;

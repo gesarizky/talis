@@ -1,3 +1,8 @@
+
+/**
+ * @description constructor cms
+ */
+
 class CMSModel {
 
   constructor(msg_count, frame_name, cms_code, base_code, mcu_code, site_location, bid, vcell, temp, pack, wake_status, door_status) {

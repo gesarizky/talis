@@ -1,8 +1,9 @@
-import { Sequelize } from "sequelize";
-import DBHISTORY from "@/config/history/DBHistory";
+import { DataTypes } from "sequelize";
 import DB from "@/config/database";
 
-const { DataTypes } = Sequelize;
+/**
+ * @description tabel history mppt
+ */
 
 const HistoryMppt = DB.define("history_mppt", {
   UUID_User: DataTypes.STRING,

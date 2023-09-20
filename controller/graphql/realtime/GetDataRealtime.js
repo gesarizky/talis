@@ -3,6 +3,10 @@ import { apolloClient } from "../apollo";
 import postRealtimeData from "@/controller/realtime/post/PostDataRealtime";
 import RealtimeDb from "@/model/realtime/database";
 
+/**
+ * @description mengambil data realtime rms dan mengolah data
+ */
+
 const getDataRealtime = async () => {
   try {
     const timestamp = await RealtimeDb.max("updatedAt");

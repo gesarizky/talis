@@ -1,7 +1,9 @@
 import { DataTypes } from "sequelize";
-import DBHISTORY from "@/config/history/DBHistory";
 import DB from "@/config/database";
 
+/**
+ * @description tabel history vell voltage
+ */
 
 const HistoryCellVoltage = DB.define("history_Cellvoltage", {
   UUID_User: DataTypes.STRING,

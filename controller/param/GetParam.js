@@ -1,6 +1,10 @@
-// get config for specific device
-
 import ParamSetting from "@/model/param/ParamSetting";
+
+/**
+ * @description mengambil parameter setting
+ * @param {*} params
+ * @returns param config
+ */
 
 const GetParam = async (params) => {
   try {
@@ -25,14 +29,8 @@ const GetParam = async (params) => {
       .map(Number); // convert array string into number
     return dataParams;
   } catch (error) {
-    console.log(error);
+    console.log("error : ~ file GetParam.js : ", error);
   }
-};
-
-const GetParamCellUnUsed = async (device_sn) => {
-  const dataParams = await GetParam(device_sn);
-  const configCell = dataParams.config.cell_not_used;
-  return configCell;
 };
 
 export default GetParam;

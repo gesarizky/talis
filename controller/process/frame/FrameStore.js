@@ -3,6 +3,20 @@ import StoreHistoryHealth from "@/controller/device/rms/storedata/history/StoreH
 import StoreHistoryTempe from "@/controller/device/rms/storedata/history/StoreHistoryTemperatures";
 import StoreHistoryVoltage from "@/controller/device/rms/storedata/history/StoreHistoryVoltage";
 
+/**
+ * @description menyimpan hasil olah data cell frame ke database
+ * @param {String} dataUser UUID User
+ * @param {String} rack_sn Rack sn
+ * @param {String} rms_sn rms sn
+ * @param {Date} timestamp waktu di kirim
+ * @param {Object} listFrameAnalytic data hasil olah frame
+ * @param {Object} datacontent data hasil olah content frame
+ * @param {Object} datahealth data hasil olah health frame
+ * @param {Object} datavoltage data hasil olah voltage frame
+ * @param {Object} datatemperature data hasil olah temperature frame
+ * @returns 
+ */
+
 const FrameStore = async (
   dataUser,
   rack_sn,
@@ -54,7 +68,7 @@ const FrameStore = async (
       await StoreHistoryTempe(result);
     }
   } catch (error) {
-    console.log("error : framestore.js :", error);
+    console.log("error : ~ file FrameStore.js :", error);
   }
 };
 

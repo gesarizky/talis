@@ -1,6 +1,9 @@
 import { DataTypes } from "sequelize";
-import DBHISTORY from "@/config/history/DBHistory";
 import DB from "@/config/database";
+
+/**
+ * @description tabel history cell temperature
+ */
 
 const HistoryCellTempe = DB.define("history_Celltemperature", {
   UUID_User: DataTypes.STRING,
