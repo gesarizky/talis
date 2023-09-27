@@ -1,20 +1,21 @@
 import { gql } from "@apollo/client";
 import { apolloClient } from "../apollo";
-import postRealtimeData from "@/controller/realtime/post/PostDataRealRms";
-import RealtimeDb from "@/model/realtime/database";
+import RealtimeRack from "@/model/realtime/rack";
+import postRealtimeRack from "@/controller/realtime/post/PostDataRealRack";
+
 
 /**
  * @description mengambil data realtime rms dan mengolah data
  */
 
-const getDataRealtime = async () => {
+const getDataRealRms = async () => {
   try {
-    const timestamp = await RealtimeDb.max("updatedAt");
+    const timestamp = await RealtimeRack.max("updatedAt");
     let lastUpdatedAt = timestamp || "1970-01-01T00:00:00.000Z";
 
     const GET_REALTIME_SUBCRIPTION = gql`
       subscription {
-        Realtime {
+        Realtime_RMS {
           data
           UUID_User
           rms_sn
@@ -23,13 +24,12 @@ const getDataRealtime = async () => {
       }
     `;
     const handleDataUpdate = (data) => {
-      // console.log("Received new realtime data:", data);
+      //   console.log("Received new realtime rms data:", data);
       const newDateLastUpdatedAt = new Date(lastUpdatedAt); // Konversi lastUpdatedAt ke objek Date
       const newData = data.filter(
         (dataItem) => new Date(dataItem.updatedAt) > newDateLastUpdatedAt
       );
       let maxUpdatedAt;
-
       if (newData.length > 0) {
         maxUpdatedAt = new Date(newData[0].updatedAt);
       } else {
@@ -42,7 +42,8 @@ const getDataRealtime = async () => {
           maxUpdatedAt = updatedAt;
         }
         lastUpdatedAt = maxUpdatedAt.toISOString(); // Kembali konversi ke string ISO
-        postRealtimeData(dataItem);
+        // console.log("data GetDataRealRms : ", dataItem);
+        postRealtimeRack(dataItem);
       });
     };
 
@@ -50,10 +51,10 @@ const getDataRealtime = async () => {
       const subscription = apolloClient.subscribe({
         query: GET_REALTIME_SUBCRIPTION,
       });
-      console.log("Attempting to connect realtime subscription...");
+      console.log("Attempting to connect realtime rms subscription...");
       subscription.subscribe({
         next: (result) => {
-          const data = result.data.Realtime;
+          const data = result.data.Realtime_RMS;
           handleDataUpdate(data);
         },
         error: (error) => {
@@ -65,7 +66,7 @@ const getDataRealtime = async () => {
     };
     subscribeToRealtime();
   } catch (error) {
-    console.error("Error : ~ file GetDataRealtime.js :", error.message);
+    console.error("Error : ~ file GetDataRealRms.js :", error.message);
   }
 };
-export default getDataRealtime;
+export default getDataRealRms;

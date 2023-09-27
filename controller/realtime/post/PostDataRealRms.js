@@ -1,4 +1,4 @@
-import AddDataRealtime from "../storedata/AddDataRealtime";
+import AddDataRealtime from "../storedata/AddDataRealRms";
 const postRealtimeData = async (datarms) => {
   try {
     const { data, UUID_User , rms_sn } = datarms;

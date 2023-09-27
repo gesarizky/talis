@@ -5,7 +5,7 @@ import DB from "@/config/database";
  * @description tabel realtime rms
  */
 
-const RealtimeDb = DB.define("realtime", {
+const RealtimeDb = DB.define("realtime_rms", {
   rms_sn: {
     unique: "UUID_User",
     type: DataTypes.STRING,
