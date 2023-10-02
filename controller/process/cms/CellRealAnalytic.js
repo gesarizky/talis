@@ -1,10 +1,11 @@
 import CMSModel from "@/model/access/cms/CMSModel";
 import CellReal from "./CellReal";
 import ModelParam from "@/model/access/param/ModelParam";
-import TempAnalytic from "./TempAnalytic";
+import TempRealAnalytic from "./TempRealAnalytic";
 import FrameAnalytic from "../frame/FrameAnalytic";
 import GetParam from "@/controller/param/GetParam";
 import FrameStoreReal from "../frame/FrameStoreReal";
+import StoreRealtimeCms from "@/controller/device/rms/storedata/realtime/StoreRealtimeCms";
 
 /**
  * @description fungsi utama analisis cell tiap frame
@@ -41,7 +42,7 @@ const CellRealAnalytic = async (RMSData) => {
               1000
           );
           const temps = myModelInstance.temp;
-          const resultTemp = TempAnalytic(temps);
+          const resultTemp = TempRealAnalytic(temps);
 
           const filteredVcell = vcell.filter(
             (_, index) => !indexUnusedZeroBased.includes(index)
@@ -54,21 +55,11 @@ const CellRealAnalytic = async (RMSData) => {
           Object.assign(result["data"], resultVoltage);
           Object.assign(result["data"], resultTemp);
           const realtimeCellsData = { frame_name: frame_name, ...result };
-          //   console.log("data cellRealAnalytic : ", resultFrame);
+          // console.log("data cellRealAnalytic : ", realtimeCellsData);
+          await StoreRealtimeCms(realtimeCellsData);
         }
       });
       FrameStoreReal(rack_sn, resultFrame);
-      //   FrameStore(
-      //     dataUser,
-      //     rack_sn,
-      //     rms_sn,
-      //     timestamp,
-      //     resultFrame,
-      //     resultcontent,
-      //     resulthealth,
-      //     resultvoltage,
-      //     resulttemperature
-      //   ); // store frame data
     } else {
       //   const rack_sn = RMSData.rack_sn;
       //   const rms_sn = RMSData.rms_sn;

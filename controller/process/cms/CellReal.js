@@ -83,34 +83,10 @@ const CellReal = (frame_name, dataVcell, modelParam) => {
       },
       ...health,
       ...content,
-      // health: {
-      //     color: batas.getStatus(value),
-      //     value: (((configModelParam.capacityNew / configModelParam.capacityNow) - ((maxVcell - value) / configModelParam.maximumDifferentCell)) * 100).toFixed(1)
-
-      // },
-      // content: {
-      //     color: batas.getStatus(value),
-      //     value: ((value / configModelParam.maximumCellVoltage) * 100).toFixed(1)
-
-      // },
-      // cell: {
-      //     index: i + 1,
-      //     value: value,
-      //     color: batas.getStatus(value),
-      //     content: {
-      //         value: ((value / configModelParam.maximumCellVoltage) * 100).toFixed(1),
-      //         color: batas.getStatus(value)
-      //     },
-      //     health: {
-      //         value: (((configModelParam.capacityNew / configModelParam.capacityNow) - ((maxVcell - value) / configModelParam.maximumDifferentCell)) * 100).toFixed(1),
-      //         color: batas.getStatus(value)
-      //     }
-      // }
     };
   });
 
   const result = { data: { frame_name: frame_name, result: hasilContent } };
-  // const result = { data: { frame_name: frame_name, result: hasilContent } };
 
   return result;
 };

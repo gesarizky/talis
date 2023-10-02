@@ -58,10 +58,6 @@ const FrameAnalytic = (resultCell, frame_name) => {
 
     return resultFrame;
 
-    console.log(`${frame_name} :  Minimum health value:   ${minHealth}`);
-    console.log(`${frame_name} :  Minimum content value:   ${minContent}`);
-    // console.log('frame' , frame_name);
-
 }
 
 

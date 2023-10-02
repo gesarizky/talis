@@ -5,6 +5,8 @@ class RealtimeModel {
     this.UUID_User = data.UUID_User;
     this.health = { value: data.health, color: getColor(data.health) };
     this.content = { value: data.content, color: getColor(data.content) };
+    this.mode = "standby";
+    this.cycling = false;
     this.updatedAt = data.updatedAt;
   }
 }
